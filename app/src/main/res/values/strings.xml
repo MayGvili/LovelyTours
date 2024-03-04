@@ -12,8 +12,10 @@
     <string name="max_people">Max tourist</string>
     <string name="date">Date</string>
     <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
     <string name="duration">Duration</string>
     <string name="name">Name</string>
     <string name="create_tour">Create Tour</string>
     <string name="my_tours">My Tours</string>
+    <string name="tour_created">The tour is created successfully</string>
 </resources>

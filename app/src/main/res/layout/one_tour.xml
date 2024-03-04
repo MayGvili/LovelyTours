@@ -2,47 +2,53 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layoutDirection="rtl"
-    android:id="@+id/cardView"
-    android:textDirection="rtl">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ScrollView>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:cardUseCompatPadding="true"
+    android:id="@+id/cardView">
+
+
     <LinearLayout
+        android:padding="8dp"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-
-    <ImageView
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:id="@+id/ingTour"
-        android:layout_margin="10dp"/>
-
-
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="150dp"/>
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/tvTourname"
-            android:textStyle="bold"
             android:textSize="18dp"
-            android:text="שם הטיול">
+            android:textStyle="bold"
+            android:layout_height="wrap_content"/>
 
-        </TextView>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/Gray"/>
+
         <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/date"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:id="@+id/tvTourdate"
-            android:text="תאריך הטיול">
+            android:layout_height="wrap_content"/>
 
-        </TextView>
-
-
-
+        <TextView
+            android:id="@+id/time"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+
 
 
 </androidx.cardview.widget.CardView>

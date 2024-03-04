@@ -49,10 +49,6 @@ public class InviteTourDialog extends Dialog {
         TextView tourOrder= findViewById(R.id.tourOrder);
         TextView tourDescription=  findViewById(R.id.tourDescription);
         tourName.setText(tour.getName());
-//        tourCity.setText(tour.getCity());
-//        tourRegion.setText(tour.getRegion());
-//        tourDate.setText(tour.getDate());
-        tourTime.setText(tour.getTime());
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

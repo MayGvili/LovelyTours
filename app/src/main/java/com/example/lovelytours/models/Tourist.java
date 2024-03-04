@@ -1,5 +1,8 @@
 package com.example.lovelytours.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tourist extends User {
 
 
@@ -11,6 +14,8 @@ public class Tourist extends User {
         this.phone = phone;
         this.imageUri = imageUri;
     }
+
+
 
 }
 

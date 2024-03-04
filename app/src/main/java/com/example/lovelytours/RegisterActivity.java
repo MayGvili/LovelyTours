@@ -23,6 +23,7 @@ import com.example.lovelytours.models.Guide;
 import com.example.lovelytours.models.Tourist;
 import com.example.lovelytours.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -159,12 +160,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 user = new Guide(myAuth.getUid(), etFullname.getText().toString(),etPhonenumber.getText().toString(), imageUri);;
                             }
 
-                            DataBaseManager.saveUser(user);
-                            Session.getSession().setCurrentUser(user);
-                            //save to shared prf
-                            Intent intent= new Intent(RegisterActivity.this, HomePage.class);
-                            startActivity(intent);
-                            finish();
+                            DataBaseManager.saveUser(user, new OnSuccessListener() {
+                                @Override
+                                public void onSuccess(Object o) {
+                                    Session.getSession().setCurrentUser(user);
+                                    //save to shared prf
+                                    Intent intent= new Intent(RegisterActivity.this, HomePage.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
                         }
                         else
                             Toast.makeText(RegisterActivity.this, "the authentication is failed", Toast.LENGTH_SHORT).show();

@@ -24,7 +24,7 @@
             android:scaleType="centerCrop"
             android:padding="6dp"
             android:cropToPadding="true"
-            android:src="@drawable/bg_border"/>
+            android:foreground="@drawable/bg_border"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -135,15 +135,20 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/start_time"/>
-                <Spinner
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:id="@+id/time"/>
+                    android:focusable="false"
+                    android:hint="@string/start_time">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/start_time"
+                        android:layout_width="match_parent"
+                        android:inputType="numberSigned"
+                        android:focusable="false"
+                        android:layout_height="match_parent"/>
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -152,15 +157,21 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/duration"/>
-                <Spinner
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:id="@+id/duration"/>
+                    android:focusable="false"
+                    android:layout_marginStart="8dp"
+                    android:hint="@string/end_time">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/end_time"
+                        android:layout_width="match_parent"
+                        android:inputType="numberSigned"
+                        android:focusable="false"
+                        android:layout_height="match_parent"/>
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
