@@ -1,5 +1,7 @@
 package com.example.lovelytours;
 
+
+import com.example.lovelytours.models.Guide;
 import com.example.lovelytours.models.Tour;
 import com.example.lovelytours.models.Tourist;
 import com.example.lovelytours.models.User;
@@ -13,18 +15,19 @@ import java.util.function.Consumer;
 
 public class DataBaseManager {
 
-    private static final String USERS ="Users";
+    private static final String USERS = "Users";
 
-    private static final String GUIDES ="Guides";
-    private static final String TOURISTS ="Tourists";
+    private static final String GUIDES = "Guides";
+    private static final String TOURISTS = "Tourists";
 
-    private static final String TOURS ="Tours";
+    private static final String TOURS = "Tours";
 
-    public static void saveUser(User user) {
+    public static void saveUser(User user, OnSuccessListener listener) {
         FirebaseDatabase.getInstance()
                 .getReference(user instanceof Tourist ? TOURISTS : GUIDES)
                 .child(user.getId())
-                .setValue(user);
+                .setValue(user)
+                .addOnSuccessListener(listener);
     }
 
     public static void getTours(Consumer<List<Tour>> onDone) {
@@ -54,4 +57,27 @@ public class DataBaseManager {
                 .get()
                 .addOnSuccessListener(listener);
     }
+
+    public static void saveTour(Tour tour, OnSuccessListener<Void> listener) {
+        ((Guide) Session.getSession().getCurrentUser()).getCreatedToursId().add(tour.getId());
+        FirebaseDatabase.getInstance()
+                .getReference(TOURS)
+                .child(tour.getId())
+                .setValue(tour)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        saveUser(Session.getSession().getCurrentUser(), listener);
+                    }
+                });
+    }
+
+    public static void getTour(String id, OnSuccessListener<DataSnapshot> listener) {
+        FirebaseDatabase.getInstance()
+                .getReference(TOURS)
+                .child(id)
+                .get()
+                .addOnSuccessListener(listener);
+    }
+
 }

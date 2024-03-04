@@ -2,12 +2,14 @@ package com.example.lovelytours;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -16,21 +18,32 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.example.lovelytours.models.Location;
 import com.example.lovelytours.models.Tour;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class CreateTourActivity extends AppCompatActivity {
 
 
     private Bitmap imageBt;
-    private TextInputEditText description, startPoint, destination, maxTourists, date, name;
+    private TextInputEditText description, startPoint, destination, maxTourists, date, name, startTime, endTime;
     private AppCompatImageView image, camera, gallery;
     private Spinner time, duration;
 
@@ -64,6 +77,21 @@ public class CreateTourActivity extends AppCompatActivity {
                 }
 
             });
+
+    private final ActivityResultLauncher<Intent> getLocationLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result ->{
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (openByStartPoint) {
+                        stratAddress = result.getData().getParcelableExtra("address");
+                        startPoint.setText(stratAddress.getAddressLine(0));
+                    } else {
+                        endAddress = result.getData().getParcelableExtra("address");
+                        destination.setText(endAddress.getAddressLine(0));
+                    }
+                }
+
+            });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +102,8 @@ public class CreateTourActivity extends AppCompatActivity {
         destination = findViewById(R.id.destination);
         maxTourists = findViewById(R.id.max_tourists);
         date = findViewById(R.id.date);
-        time = findViewById(R.id.time);
-        duration = findViewById(R.id.duration);
+        startTime = findViewById(R.id.start_time);
+        endTime = findViewById(R.id.end_time);
         gallery = findViewById(R.id.gallery);
         camera = findViewById(R.id.take_photo);
         image = findViewById(R.id.image);
@@ -94,6 +122,30 @@ public class CreateTourActivity extends AppCompatActivity {
         date.setOnClickListener(v -> openDatePicker());
         Button save = findViewById(R.id.create);
         save.setOnClickListener(v->createTour());
+        
+        startTime.setOnClickListener(v-> openTimePicker(startTime));
+        endTime.setOnClickListener(v-> openTimePicker(endTime));
+    }
+
+    private void openTimePicker(TextInputEditText et) {
+        Calendar calendar = Calendar.getInstance();
+
+        // on below line we are getting our hour, minute.
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // on below line we are initializing
+        // our Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int min) {
+                et.setText(hour + ":" + min);
+            }},
+                hour,
+                minute,
+                false);
+        timePickerDialog.show();
     }
 
     private void openDatePicker() {
@@ -144,13 +196,46 @@ public class CreateTourActivity extends AppCompatActivity {
     }
 
     private void createTour() {
-       // Tour tour = new Tour(maxTourists.getText().toString(), date.getText().toString(), description.getText().toString(),
-              //  ,name.getText().toString() ,imageUrl, ti)
+        String id = UUID.randomUUID().toString();
+        StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("tours/" + id +".jpg");
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        imageBt.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+        UploadTask uploadTask = imageRef.putBytes(imageBytes);
+        uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if (task.isSuccessful()){
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri->{
+                        imageUrl = uri.toString();
+                        saveTourTODataBase(id);
+                    });
+                } else {
+                    AlertDialogManager.showMessage(CreateTourActivity.this, getString(R.string.error), task.getException().getMessage());
+                }
+            }
+        });
+
+    }
+
+    private void saveTourTODataBase(String id) {
+        Tour tour = new Tour(id, Integer.parseInt(maxTourists.getText().toString()), dateTimestamp, description.getText().toString(),
+                imageUrl ,name.getText().toString() , startTime.getText().toString(),
+                endTime.getText().toString(), new Location(stratAddress.getLatitude(), stratAddress.getLongitude(),startPoint.getText().toString()),
+                new Location(endAddress.getLatitude(), endAddress.getLongitude(), destination.getText().toString()));
+
+        DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(CreateTourActivity.this, getText(R.string.tour_created), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     private void openMapScreen() {
         Intent intent = new Intent(this, FindLocationActivity.class);
-        startActivityForResult(intent, 1);
+        getLocationLauncher.launch(intent);
     }
 
     private void openGallery() {
@@ -164,19 +249,5 @@ public class CreateTourActivity extends AppCompatActivity {
     private void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         takePhotoLauncher.launch(intent);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (openByStartPoint) {
-                stratAddress = data.getParcelableExtra("address");
-                startPoint.setText(stratAddress.getAddressLine(0));
-            } else {
-                endAddress = data.getParcelableExtra("address");
-                destination.setText(endAddress.getAddressLine(0));
-            }
-        }
     }
 }

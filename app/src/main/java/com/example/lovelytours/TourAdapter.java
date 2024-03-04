@@ -16,82 +16,57 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class TourAdapter extends RecyclerView.Adapter<TourAdapter.tourViewHolder>
-{
-     private ArrayList<Tour>tours;
+public class TourAdapter extends RecyclerView.Adapter<TourAdapter.tourViewHolder> {
+    private ArrayList<Tour> tours;
 
 
-     public TourAdapter(ArrayList<Tour> tours)
-     {
-          this.tours = tours;
-     }
+    public TourAdapter(ArrayList<Tour> tours) {
+        this.tours = tours;
+    }
+    DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
-     @NonNull
-     @Override
-     public tourViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-     {
-          View tourView = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_tour, parent , false);
+    @NonNull
+    @Override
+    public tourViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View tourView = LayoutInflater.from(parent.getContext()).inflate(R.layout.one_tour, parent, false);
 
-          return new tourViewHolder(tourView);
-     }
+        return new tourViewHolder(tourView);
+    }
 
-     @Override
-     public void onBindViewHolder(@NonNull tourViewHolder holder, int position)
-     {
-          Tour currentTours = tours.get(position);
-          holder.tvTourName.setText(currentTours.getName());
-         // holder.tvTourDate.setText(currentTours.getDate());
-          String imageUri = null;
-          holder.cardView.setOnClickListener(new View.OnClickListener()
-          {
-               @Override
-               public void onClick(View v)
-               {
-                    Dialog d=new Dialog(v.getContext());
-                    d.setContentView(R.layout.thetours_details);
-                    new InviteTourDialog(holder.itemView.getContext(), currentTours).show();
+    @Override
+    public void onBindViewHolder(@NonNull tourViewHolder holder, int position) {
+        Tour tour = tours.get(position);
+        Picasso.get().load(tour.getImage())
+                .centerCrop()
+                .fit()
+                .into(holder.image);
 
-                   d.show();
-               }
-          });
-          imageUri = currentTours.getImage();
-          FirebaseStorage storage = FirebaseStorage.getInstance();
-          StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-          storageReference = storage.getReference("Tours");
-          StorageReference storageReference1 = FirebaseStorage.getInstance().getReference();
-         Picasso.get().load(imageUri).into(holder.ingTour);
+        holder.date.setText(dateFormat.format(tour.getDate()));
+        holder.time.setText("Start time: " + tour.getStartTime() + " End time: " + tour.getEndTime());
+    }
 
 
-     }
+    @Override
+    public int getItemCount() {
+        return tours.size();
+    }
+
+    public static class tourViewHolder extends RecyclerView.ViewHolder {
+        public TextView name, date, time;
+        public ImageView image;
+
+        public tourViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.name);
+            date = itemView.findViewById(R.id.date);
+            time = itemView.findViewById(R.id.time);
+            image = itemView.findViewById(R.id.image);
 
 
-
-     @Override
-     public int getItemCount()
-     {
-          return tours.size();
-     }
-
-     public static class tourViewHolder extends RecyclerView.ViewHolder
-     {
-          public TextView tvTourName;
-          public TextView tvTourDate;
-          public ImageView ingTour;
-          CardView cardView;
-
-          public tourViewHolder(@NonNull View itemView)
-          {
-               super(itemView);
-               tvTourDate= itemView.findViewById(R.id.tvTourdate);
-               tvTourName= itemView.findViewById(R.id.tvTourname);
-               ingTour= itemView.findViewById(R.id.ingTour);
-               cardView=itemView.findViewById(R.id.cardView);
-
-
-
-
-          }
-     }
+        }
+    }
 }
