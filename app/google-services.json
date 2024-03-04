@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1058610908538",
+    "project_id": "lovelytours",
+    "storage_bucket": "lovelytours.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058610908538:android:14ef8de323f243c134dac3",
+        "android_client_info": {
+          "package_name": "com.example.lovelytours"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgV6JnoXWvocw5uROPaavfuEwwFsT5TmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

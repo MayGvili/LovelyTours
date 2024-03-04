@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="#F0FFFF"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvWelcomeTo"
+        android:layout_width="338dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="130dp"
+        android:fontFamily="@font/fontforget"
+        android:text="WELCOME TO"
+        android:textColor="@color/Gray"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvLovelyTours"
+        android:layout_width="338dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:fontFamily="@font/fontforget"
+        android:text="LOVELY TOURS"
+        android:textColor="@color/Gray"
+        android:textSize="25dp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/SaddleBrown"
+        android:hint="@string/enter_email"
+        android:textColorHint="@color/Gray"
+        android:drawableRight="@drawable/email_icon"
+        android:inputType="text"
+        android:id="@+id/etEmail"/>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textColor="@color/Gray"
+        android:textColorHint="@color/Gray"
+        android:layout_gravity="center"
+        android:hint="enter your Password"
+        android:inputType="textPassword"
+        android:drawableRight="@drawable/eye_password"
+        android:id="@+id/etPassword"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forget Password?"
+        android:textStyle="bold"
+        android:textColor="@color/Gray"
+        android:id="@+id/tvForgetPass"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="30dp"/>
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/AliceBlue"
+        android:backgroundTint="@color/Gray"
+        android:id="@+id/btnLogin"
+        android:text="Login"
+        android:layout_marginTop="30dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRegister"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="@color/Gray"
+        android:text="To sign in press here"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

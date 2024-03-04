@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/AliceBlue"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:textColor="@color/Gray"
+            android:text="שם הטיול"
+            android:layout_marginTop="10dp"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:fontFamily="@font/hebrew1"
+            android:id="@+id/tourName"
+
+            ></TextView>
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/btnClose"
+            android:background="@drawable/close">
+
+        </Button>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="עיר"
+        android:id="@+id/tourCity"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="אזור"
+        android:id="@+id/tourRegion"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="תאריך"
+        android:id="@+id/tourDate"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="שעה"
+        android:id="@+id/tourTime"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="כמות אנשים"
+        android:id="@+id/tourLimPeople"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="מקומות נותרים"
+        android:id="@+id/tvRest"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="120dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="תיאור"
+        android:id="@+id/tourDescription"
+        android:textSize="27sp"
+        android:fontFamily="@font/hebrew"
+        android:gravity="center"
+        ></TextView>
+        </ScrollView>
+
+    <ImageView
+        android:src="@drawable/log"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:id="@+id/tourImage"
+        android:gravity="center"
+
+        ></ImageView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:text="להזמנת מקומות לחץ כאן"
+        android:id="@+id/tourOrder"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/hebrew1"
+        android:textColor="@color/Gray"
+        android:gravity="center"
+        ></TextView>
+
+
+
+</LinearLayout>
+    </ScrollView>

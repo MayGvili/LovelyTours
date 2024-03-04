@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8FFFE4C4"
+    tools:context=".profile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:textColor="@color/SaddleBrown"
+            android:fontFamily="@font/fontforget"
+            android:text="My details"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etFullnameProfile"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:drawableRight="@drawable/name_icon"
+            android:gravity="center"
+            android:textColorHint="@color/SaddleBrown"
+            android:hint="enter your Full name" />
+
+        <EditText
+            android:id="@+id/etPhonenumberProfile"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:textColorHint="@color/SaddleBrown"
+            android:hint="enter your Phone number"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/etEmailProfile"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:drawableRight="@drawable/email_icon"
+            android:gravity="center"
+            android:textColorHint="@color/SaddleBrown"
+            android:hint="enter your Email"
+            android:inputType="textWebEmailAddress" />
+        <Button
+            android:id="@+id/btnProfile"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/BlanchedAlmond"
+            android:backgroundTint="#68472F"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Save" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>
