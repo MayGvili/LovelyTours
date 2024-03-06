@@ -50,10 +50,10 @@ public class MyToursFragment extends Fragment {
 
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+
+    private void fetchTours() {
         if (Session.getSession().isGuide()) {
+            tourList.clear();
             List<String> ids = ((Guide)Session.getSession().getCurrentUser()).getCreatedToursId();
             for (int i = 0; i < ids.size(); i++) {
                 int finalI = i;
@@ -68,5 +68,11 @@ public class MyToursFragment extends Fragment {
                 });
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchTours();
     }
 }
