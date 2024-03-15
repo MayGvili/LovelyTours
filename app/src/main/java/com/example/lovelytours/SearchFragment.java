@@ -30,9 +30,7 @@ public class SearchFragment extends Fragment {
     RecyclerView myRecycle;
     BottomNavigationView bottomNavigation1;
     Tour tour;
-
-
-
+    TourAdapter tourAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,37 +41,30 @@ public class SearchFragment extends Fragment {
         myRef = myData.getReference("Tours");
         tours = new ArrayList<>();
         myRecycle = view.findViewById(R.id.myRecycle);
-        ShowTours();
-
-
-        // Inflate the layout for this fragment
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
+        myRecycle.setLayoutManager(layoutManager);
+        tourAdapter = new TourAdapter(tours, position -> {
+            openTourDetails(position);
+        });
+        myRecycle.setAdapter(tourAdapter);
+        showTours();
         return view;
     }
 
-    private void openCreateTourScreen() {
-        Intent intent = new Intent(this.getContext(), CreateTourActivity.class);
-        startActivity(intent);
-    }
-
-    private void ShowTours()
+    private void showTours()
     {
             myRef.addValueEventListener(new ValueEventListener()
             {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot)
-                {
-
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    tours.clear();
                     Iterable<DataSnapshot> children = snapshot.getChildren();
                     for( DataSnapshot child: children )
                     {
                         tour = child.getValue(Tour.class);
                         tours.add(tour);
                     }
-                    // RecyclerView myRecycle = findViewById(R.id.myRecycle);
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
-                    myRecycle.setLayoutManager(layoutManager);
-                    TourAdapter tourAdapter = new TourAdapter(tours);
-                    myRecycle.setAdapter(tourAdapter);
+                    tourAdapter.notifyDataSetChanged();
 
 
                 }
@@ -85,6 +76,12 @@ public class SearchFragment extends Fragment {
 
             });
 
+    }
+
+    private void openTourDetails(int position) {
+        Intent intent = new Intent(this.getContext(), CreateTourActivity.class);
+        intent.putExtra("tour", tours.get(position));
+        startActivity(intent);
     }
 
 }

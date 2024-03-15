@@ -25,11 +25,10 @@ import java.util.List;
 
 public class MyToursFragment extends Fragment {
 
-
     private RecyclerView recyclerView;
     private AppCompatButton createBT;
     private ArrayList<Tour> tourList = new ArrayList<>();
-    private TourAdapter adapter = new TourAdapter(tourList);
+    private TourAdapter adapter = new TourAdapter(tourList, null);
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,27 +45,26 @@ public class MyToursFragment extends Fragment {
             }
         });
 
+        createBT.setVisibility(Session.getSession().isGuide() ? View.VISIBLE : View.GONE);
         return view;
 
     }
 
 
     private void fetchTours() {
-        if (Session.getSession().isGuide()) {
-            tourList.clear();
-            List<String> ids = ((Guide)Session.getSession().getCurrentUser()).getCreatedToursId();
-            for (int i = 0; i < ids.size(); i++) {
-                int finalI = i;
-                DataBaseManager.getTour(ids.get(i), new OnSuccessListener<DataSnapshot>() {
-                    @Override
-                    public void onSuccess(DataSnapshot dataSnapshot) {
-                        tourList.add(finalI, dataSnapshot.getValue(Tour.class));
-                        if (finalI == ids.size() - 1) {
-                            adapter.notifyDataSetChanged();
-                        }
+        tourList.clear();
+        List<String> ids = Session.getSession().getCurrentUser().getToursIdsList();
+        for (int i = 0; i < ids.size(); i++) {
+            int finalI = i;
+            DataBaseManager.getTour(ids.get(i), new OnSuccessListener<DataSnapshot>() {
+                @Override
+                public void onSuccess(DataSnapshot dataSnapshot) {
+                    tourList.add(finalI, dataSnapshot.getValue(Tour.class));
+                    if (finalI == ids.size() - 1) {
+                        adapter.notifyDataSetChanged();
                     }
-                });
-            }
+                }
+            });
         }
     }
 

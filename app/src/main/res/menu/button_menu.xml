@@ -15,8 +15,8 @@
         android:title="Nearby"
         android:icon="@drawable/location_icon"/>
     <item
-        android:id="@+id/button_pageBar_tickets"
-        android:title="Tickets"
+        android:id="@+id/tickets"
+        android:title="@string/tickets"
         android:icon="@drawable/card_icon"/>
     <item
         android:id="@+id/button_pageBar_profile"

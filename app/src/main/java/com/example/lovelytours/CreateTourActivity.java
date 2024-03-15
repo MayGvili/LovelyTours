@@ -3,7 +3,6 @@ package com.example.lovelytours;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -16,6 +15,7 @@ import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TimePicker;
@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,11 +47,13 @@ public class CreateTourActivity extends AppCompatActivity {
     private TextInputEditText description, startPoint, destination, maxTourists, date, name, startTime, endTime;
     private AppCompatImageView image, camera, gallery;
     private Spinner time, duration;
-
+    private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    Button save;
     private boolean openByStartPoint = true;
     private Address stratAddress, endAddress;
     private String imageUrl;
     private long dateTimestamp;
+    private Tour tour;
 
 
     private final ActivityResultLauncher<Intent> takePhotoLauncher = registerForActivityResult(
@@ -90,12 +93,14 @@ public class CreateTourActivity extends AppCompatActivity {
                         destination.setText(endAddress.getAddressLine(0));
                     }
                 }
-
             });
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tour);
+        tour = (Tour) getIntent().getSerializableExtra("tour");
         name = findViewById(R.id.name);
         description = findViewById(R.id.description);
         startPoint = findViewById(R.id.start_point);
@@ -120,11 +125,56 @@ public class CreateTourActivity extends AppCompatActivity {
         });
 
         date.setOnClickListener(v -> openDatePicker());
-        Button save = findViewById(R.id.create);
+        save = findViewById(R.id.create);
         save.setOnClickListener(v->createTour());
         
         startTime.setOnClickListener(v-> openTimePicker(startTime));
         endTime.setOnClickListener(v-> openTimePicker(endTime));
+        
+        initilizeScreen();
+    }
+
+    private void initilizeScreen() {
+        if(tour != null) {
+            name.setText(tour.getName());
+            name.setEnabled(false);
+            startPoint.setText(tour.getStartLocation().getTitle());
+            startPoint.setEnabled(false);
+            destination.setText(tour.getDestination().getTitle());
+            destination.setEnabled(false);
+            description.setText(tour.getDescription());
+            description.setEnabled(false);
+            maxTourists.setText(String.valueOf(tour.getLimPeople()));
+            maxTourists.setHint(getString(R.string.available_tickets));
+            maxTourists.setEnabled(false);
+            date.setText(dateFormat.format(tour.getDate()));
+            date.setEnabled(false);
+            startTime.setText(tour.getStartTime());
+            startTime.setEnabled(false);
+            endTime.setText(tour.getEndTime());
+            endTime.setEnabled(false);
+            Picasso.get().load(tour.getImage())
+                    .centerCrop()
+                    .fit()
+                    .into(image);
+            camera.setVisibility(View.GONE);
+            gallery.setVisibility(View.GONE);
+            save.setText(R.string.register_to_tour);
+            save.setOnClickListener(v -> onRegisterToTourClicked());
+            save.setEnabled(tour.getLimPeople() > 0);
+        }
+    }
+
+    private void onRegisterToTourClicked() {
+        tour.setLimPeople(tour.getLimPeople() - 1);
+        DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(CreateTourActivity.this, getText(R.string.registration_successfully), Toast.LENGTH_LONG).show();
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
     }
 
     private void openTimePicker(TextInputEditText et) {

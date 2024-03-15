@@ -1,16 +1,16 @@
 package com.example.lovelytours.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
    protected String fullName;
     protected String phone;
     protected String imageUri;
-
     protected String id;
 
-    protected List<Tour> toursList = new ArrayList<>();
+    protected List<String> toursIdsList = new ArrayList<>();
 
 
     public String getId() {
@@ -21,13 +21,14 @@ public class User {
         this.id = id;
     }
 
-    public User() {
-    }
+    public User() {}
+
     public User(String id, String fullName, String phone, String imageUri) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
         this.imageUri = imageUri;
+        this.toursIdsList = new ArrayList<>();
     }
 
 
@@ -49,12 +50,12 @@ public class User {
     public String getImageUri() { return imageUri;}
     public void setImageUri(String imageUri) {this.imageUri = imageUri;}
 
-    public List<Tour> getToursList() {
-        return toursList;
+    public List<String> getToursIdsList() {
+        return toursIdsList;
     }
 
-    public void setToursList(List<Tour> toursList) {
-        this.toursList = toursList;
+    public void setToursIdsList(List<String> toursIdsList) {
+        this.toursIdsList = toursIdsList;
     }
 }
 
