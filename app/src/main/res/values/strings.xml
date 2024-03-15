@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">LovelyTours</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error">Error</string>
     <string name="enter_email">Enter you Email</string>
@@ -9,7 +8,7 @@
     <string name="start_point">Start Point:</string>
     <string name="destination">Destination</string>
     <string name="description">Description</string>
-    <string name="max_people">Max tourist</string>
+    <string name="max_people">Max tourists</string>
     <string name="date">Date</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
@@ -18,4 +17,10 @@
     <string name="create_tour">Create Tour</string>
     <string name="my_tours">My Tours</string>
     <string name="tour_created">The tour is created successfully</string>
+    <string name="register_to_tour">Register To Tour</string>
+    <string name="available_tickets">Available tickets</string>
+    <string name="registration_successfully">You have successfully registered!</string>
+    <string name="tickets">Tickets</string>
+    <string name="my_profile">My Profile</string>
+    <string name="save">Save</string>
 </resources>

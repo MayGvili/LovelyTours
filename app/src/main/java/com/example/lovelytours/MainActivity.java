@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 
 
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sp=getSharedPreferences("details",0);
 
         mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
 //        sp.edit().putString("email", mAuth.getCurrentUser().getEmail());
         if (mAuth.getCurrentUser() != null) {
             fetchUserSession();
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void fetchUserSession() {
         boolean isGuide = "Guide".equals(mAuth.getCurrentUser().getDisplayName());
-        DataBaseManager.getUser(mAuth.getUid(),isGuide, new OnSuccessListener<DataSnapshot>() {
+        DataBaseManager.getUser(mAuth.getCurrentUser().getUid(),isGuide, new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 User user;

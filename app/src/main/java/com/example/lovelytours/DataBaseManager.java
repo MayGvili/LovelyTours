@@ -1,7 +1,6 @@
 package com.example.lovelytours;
 
 
-import com.example.lovelytours.models.Guide;
 import com.example.lovelytours.models.Tour;
 import com.example.lovelytours.models.Tourist;
 import com.example.lovelytours.models.User;
@@ -52,14 +51,14 @@ public class DataBaseManager {
 
     public static void getUser(String uid, boolean isGuide, OnSuccessListener<DataSnapshot> listener) {
         FirebaseDatabase.getInstance()
-                .getReference(isGuide ? GUIDES : USERS)
+                .getReference(isGuide ? GUIDES : TOURISTS)
                 .child(uid)
                 .get()
                 .addOnSuccessListener(listener);
     }
 
     public static void saveTour(Tour tour, OnSuccessListener<Void> listener) {
-        ((Guide) Session.getSession().getCurrentUser()).getCreatedToursId().add(tour.getId());
+        Session.getSession().getCurrentUser().getToursIdsList().add(tour.getId());
         FirebaseDatabase.getInstance()
                 .getReference(TOURS)
                 .child(tour.getId())

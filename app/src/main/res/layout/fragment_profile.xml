@@ -1,74 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="#8FFFE4C4"
-    tools:context=".profile">
+    tools:context=".RegisterActivity">
 
     <LinearLayout
+        android:layout_marginTop="120dp"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center|center_vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:gravity="center"
-            android:textColor="@color/SaddleBrown"
+            android:textSize="25sp"
             android:fontFamily="@font/fontforget"
-            android:text="My details"
-            android:textSize="27sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/etFullnameProfile"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:drawableRight="@drawable/name_icon"
-            android:gravity="center"
             android:textColorHint="@color/SaddleBrown"
-            android:hint="enter your Full name" />
+            android:textStyle="bold"
+            android:text="@string/my_profile"/>
 
-        <EditText
-            android:id="@+id/etPhonenumberProfile"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:textColorHint="@color/SaddleBrown"
-            android:hint="enter your Phone number"
-            android:inputType="number" />
-
-        <EditText
-            android:id="@+id/etEmailProfile"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:drawableRight="@drawable/email_icon"
-            android:gravity="center"
-            android:textColorHint="@color/SaddleBrown"
-            android:hint="enter your Email"
-            android:inputType="textWebEmailAddress" />
-        <Button
-            android:id="@+id/btnProfile"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/BlanchedAlmond"
-            android:backgroundTint="#68472F"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:text="Save" />
-
-
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_gravity="end"
+            android:src="@drawable/baseline_edit_24"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 
-</FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/profile"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:padding="6dp"
+        android:cropToPadding="true"
+        android:src="@drawable/bg_border"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/take_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_add_a_photo_24"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/baseline_insert_photo_24"/>
+    </LinearLayout>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/SaddleBrown"
+        android:hint="enter your Full name"
+        android:textColorHint="@color/SaddleBrown"
+        android:drawableRight="@drawable/name_icon"
+        android:id="@+id/etFullname"/>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/SaddleBrown"
+        android:hint="enter your Phone number"
+        android:textColorHint="@color/SaddleBrown"
+        android:inputType="number"
+        android:id="@+id/etPhonenumber"/>
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/SaddleBrown"
+        android:hint="enter your Email"
+        android:textColorHint="@color/SaddleBrown"
+        android:drawableRight="@drawable/email_icon"
+        android:inputType="textWebEmailAddress"
+        android:id="@+id/regEmail"/>
+
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:id="@+id/btnRegister"
+        android:text="@string/save"
+        android:textColor="@color/BlanchedAlmond"
+        android:backgroundTint="#68472F"
+        android:layout_marginTop="30dp"/>
+
+
+
+
+</LinearLayout>
+

@@ -9,6 +9,7 @@ public class Session {
     private User currentUser;
 
     private Session(){}
+
     public User getCurrentUser() {
         return currentUser;
     }

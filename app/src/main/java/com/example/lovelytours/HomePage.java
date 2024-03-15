@@ -10,8 +10,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.List;
-
 public class HomePage extends AppCompatActivity {
     BottomNavigationView bottomNavigationItemView;
     //profile frofileFragment = new profile();
@@ -73,7 +71,6 @@ public class HomePage extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framfragment_container, NearByFragment.class, null)
-                        .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
             } else if (itemId == R.id.button_pageBar_search) {
@@ -83,14 +80,6 @@ public class HomePage extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.framfragment_container,searchFragment, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("name") // Name can be null
-                        .commit();
-            } else if (itemId == R.id.button_pageBar_tickets) {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.framfragment_container, tickets.class, null)
-                        .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
             } else if (itemId == R.id.button_pageBar_profile) {
@@ -103,7 +92,7 @@ public class HomePage extends AppCompatActivity {
                         .setReorderingAllowed(true)
                         .addToBackStack("name") // Name can be null
                         .commit();
-            } else if (itemId == R.id.my_tours) {
+            } else if (itemId == R.id.my_tours || itemId == R.id.tickets) {
                 if (myToursFragment == null) {
                     myToursFragment = new MyToursFragment();
                 }

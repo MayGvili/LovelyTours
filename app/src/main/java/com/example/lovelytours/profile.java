@@ -36,10 +36,10 @@ EditText etFullnameProfile,etPhonenumberProfile,etEmailProfile;
        myAuth=FirebaseAuth.getInstance();
        myData=FirebaseDatabase.getInstance();
        myRef=myData.getReference("Users").child(myAuth.getCurrentUser().getUid());
-       etFullnameProfile=(EditText)view.findViewById(R.id.etFullnameProfile);
-       etPhonenumberProfile=(EditText)view.findViewById(R.id.etPhonenumberProfile);
-       etEmailProfile=(EditText)view.findViewById(R.id.etEmailProfile);
-       btnProfile=(Button) view.findViewById(R.id.btnProfile);
+//       etFullnameProfile=(EditText)view.findViewById(R.id.etFullnameProfile);
+//       etPhonenumberProfile=(EditText)view.findViewById(R.id.etPhonenumberProfile);
+//       etEmailProfile=(EditText)view.findViewById(R.id.etEmailProfile);
+//       btnProfile=(Button) view.findViewById(R.id.btnProfile);
        //btnProfile.setOnClickListener(this);
       // showmydetails();
 

@@ -40,14 +40,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     StorageReference myStorage;
     EditText etFullname , etPhonenumber, regEmail, regPassword;
     Button btnRegister;
-
     AppCompatImageView cameraImg, galleryImg, profileImg;
     Bitmap imageBt;
     String imageUri;
 
     RadioGroup groupType;
 
-    private boolean isTourist;
+    private boolean isTourist = true;
 
 
 
