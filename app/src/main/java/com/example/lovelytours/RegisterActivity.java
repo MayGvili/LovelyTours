@@ -2,6 +2,7 @@ package com.example.lovelytours;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,7 +11,9 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -31,6 +34,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,13 +44,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     StorageReference myStorage;
     EditText etFullname , etPhonenumber, regEmail, regPassword;
     Button btnRegister;
+    TextView title;
     AppCompatImageView cameraImg, galleryImg, profileImg;
     Bitmap imageBt;
     String imageUri;
-
     RadioGroup groupType;
-
     private boolean isTourist = true;
+    private ProgressDialog progressBar;
 
 
 
@@ -73,7 +77,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     }
                 }
-
             });
 
 
@@ -81,6 +84,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        progressBar = new ProgressDialog(this);
+        progressBar.setMessage(getString(R.string.please_wait));
         myAuth=FirebaseAuth.getInstance();
         myStorage = FirebaseStorage.getInstance().getReference();
         etFullname=findViewById(R.id.etFullname);
@@ -93,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         cameraImg = findViewById(R.id.take_photo);
         galleryImg = findViewById(R.id.gallery);
         groupType = findViewById(R.id.group);
-
+        title = findViewById(R.id.title);
 
         cameraImg.setOnClickListener(this);
 
@@ -107,9 +112,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (Session.getSession().getCurrentUser() != null) {// update mode
+            initScreenUpdateMode();
+        }
 
+    }
 
-
+    private void initScreenUpdateMode() {
+        User user = Session.getSession().getCurrentUser();
+        etFullname.setText(user.getFullName());
+        regEmail.setText(user.getEmail());
+        etPhonenumber.setText(user.getPhone());
+        groupType.setVisibility(View.GONE);
+        regPassword.setVisibility(View.GONE);
+        btnRegister.setText(R.string.update);
+        Picasso.get().load(Session.getSession().getCurrentUser().getImageUri())
+                .centerCrop()
+                .fit()
+                .into(profileImg);
+        title.setText(R.string.update_your_account);
     }
 
     private void openGallery() {
@@ -117,7 +138,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         galleryLauncher.launch(intent);
-
     }
 
     private void openCamera() {
@@ -139,66 +159,104 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void register()
     {
+        progressBar.show();
         uploadImage(new Runnable(){
             @Override
             public void run() {
-                myAuth.createUserWithEmailAndPassword(regEmail.getText().toString(),regPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            myAuth.getCurrentUser().updateProfile(new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(isTourist ? "Tourist" : "Guide")
-                                    .build());
-                            Toast.makeText(RegisterActivity.this, "the authentication is successful", Toast.LENGTH_SHORT).show();
-                            User user;
-                            if (isTourist) {
-                                user = new Tourist(myAuth.getUid(), etFullname.getText().toString(),etPhonenumber.getText().toString(), imageUri);;
-                            } else {
-                                user = new Guide(myAuth.getUid(), etFullname.getText().toString(),etPhonenumber.getText().toString(), imageUri);;
-                            }
-
-                            DataBaseManager.saveUser(user, new OnSuccessListener() {
-                                @Override
-                                public void onSuccess(Object o) {
-                                    Session.getSession().setCurrentUser(user);
-                                    //save to shared prf
-                                    Intent intent= new Intent(RegisterActivity.this, HomePage.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            });
+                if (isUpdateMode()) {
+                    Session.getSession().getCurrentUser().setEmail(myAuth.getCurrentUser().getEmail());
+                    Session.getSession().getCurrentUser().setFullName(etFullname.getText().toString());
+                    Session.getSession().getCurrentUser().setPhone(etPhonenumber.getText().toString());
+                    Session.getSession().getCurrentUser().setImageUri(imageUri);
+                    saveUserToDataBase(Session.getSession().getCurrentUser(), new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            progressBar.dismiss();
+                            finish();
                         }
-                        else
-                            Toast.makeText(RegisterActivity.this, "the authentication is failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    });
+                } else {
+                    createProfile();
+                }
             }
         });
 
     }
 
-    private void uploadImage(Runnable onDone) {
-        StorageReference imageRef = myStorage.child("users_images/" + myAuth.getUid()+".jpg");
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        imageBt.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        UploadTask uploadTask = imageRef.putBytes(imageBytes);
-        uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+    private void createProfile() {
+        myAuth.createUserWithEmailAndPassword(regEmail.getText().toString(),regPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if (task.isSuccessful()){
-                    imageRef.getDownloadUrl().addOnSuccessListener(uri->{
-                        imageUri = uri.toString();
-                        onDone.run();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful())
+                {
+                    myAuth.getCurrentUser().updateProfile(new UserProfileChangeRequest.Builder()
+                            .setDisplayName(isTourist ? "Tourist" : "Guide")
+                            .build());
+                    Toast.makeText(RegisterActivity.this, "the authentication is successful", Toast.LENGTH_SHORT).show();
+                    User user;
+                    if (isTourist) {
+                        user = new Tourist(myAuth.getUid(), myAuth.getCurrentUser().getEmail(), etFullname.getText().toString(),etPhonenumber.getText().toString(), imageUri);;
+                    } else {
+                        user = new Guide(myAuth.getUid(), myAuth.getCurrentUser().getEmail(), etFullname.getText().toString(),etPhonenumber.getText().toString(), imageUri);
+                    }
+
+                    saveUserToDataBase(user, new OnSuccessListener() {
+                        @Override
+                        public void onSuccess(Object o) {
+                            progressBar.dismiss();
+                            Session.getSession().setCurrentUser(user);
+                            Intent intent= new Intent(RegisterActivity.this, HomePage.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     });
-                } else {
-                    AlertDialogManager.showMessage(RegisterActivity.this, getString(R.string.error), task.getException().getMessage());
                 }
+                else
+                    Toast.makeText(RegisterActivity.this, "the authentication is failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
 
+    private void saveUserToDataBase(User user, OnSuccessListener listener) {
+        DataBaseManager.saveUser(user, new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                Session.getSession().setCurrentUser(user);
+                //save to shared prf
+                Intent intent= new Intent(RegisterActivity.this, HomePage.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
 
+    private void uploadImage(Runnable onDone) {
+        if (imageBt == null) { // it is update mode
+            imageUri = Session.getSession().getCurrentUser().getImageUri();
+            onDone.run();
+        } else {
+            StorageReference imageRef = myStorage.child("users_images/" + myAuth.getUid()+".jpg");
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            imageBt.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] imageBytes = byteArrayOutputStream.toByteArray();
+            UploadTask uploadTask = imageRef.putBytes(imageBytes);
+            uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if (task.isSuccessful()){
+                        imageRef.getDownloadUrl().addOnSuccessListener(uri->{
+                            imageUri = uri.toString();
+                            onDone.run();
+                        });
+                    } else {
+                        AlertDialogManager.showMessage(RegisterActivity.this, getString(R.string.error), task.getException().getMessage());
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean isUpdateMode() {
+        return Session.getSession().getCurrentUser() != null;
     }
 }

@@ -9,6 +9,7 @@
     tools:context=".RegisterActivity">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
@@ -18,7 +19,7 @@
         android:fontFamily="@font/fontforget"
         android:textColorHint="@color/SaddleBrown"
         android:textStyle="bold"
-        android:text="Create a new account"/>
+        android:text="@string/create_a_new_account"/>
 
 
     <androidx.appcompat.widget.AppCompatImageView

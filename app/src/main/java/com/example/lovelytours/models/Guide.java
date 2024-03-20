@@ -6,11 +6,8 @@ public class Guide extends User {
 
     public Guide() {}
 
-    public Guide(String id, String fullName, String phone, String imageUri) {
-        this.id = id;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.imageUri = imageUri;
+    public Guide(String id, String email, String fullName, String phone, String imageUri) {
+        super(id, email, fullName, phone, imageUri);
     }
 }
 

@@ -23,4 +23,11 @@
     <string name="tickets">Tickets</string>
     <string name="my_profile">My Profile</string>
     <string name="save">Save</string>
+    <string name="update">Update</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="update_your_account">Update your account</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="my_location">My Location</string>
+    <string name="available_tomrrow">Available tomorrow</string>
+
 </resources>
