@@ -184,6 +184,34 @@
             android:layout_marginTop="16dp"
             android:layout_gravity="center_horizontal"
             android:text="@string/create_tour"/>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/register_tour_container"
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_expand_less_24"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/limit"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_expand_more_24"/>
+        </LinearLayout>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

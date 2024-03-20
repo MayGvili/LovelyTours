@@ -27,9 +27,6 @@
             android:name=".TourDetails"
             android:exported="false" />
         <activity
-            android:name=".AddNewTours"
-            android:exported="false" />
-        <activity
             android:name=".TheTours"
             android:exported="false" />
         <activity

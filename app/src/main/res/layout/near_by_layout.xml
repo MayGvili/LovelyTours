@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,12 +13,17 @@
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+        android:text="@string/available_tomrrow"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:padding="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/available_bg"
+        android:layout_marginTop="16dp"/>
     <!--search view to search our location-->
 
-</RelativeLayout>
+</FrameLayout>

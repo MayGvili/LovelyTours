@@ -9,6 +9,15 @@ public class User implements Serializable {
     protected String phone;
     protected String imageUri;
     protected String id;
+    protected String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     protected List<String> toursIdsList = new ArrayList<>();
 
@@ -23,8 +32,9 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(String id, String fullName, String phone, String imageUri) {
+    public User(String id, String email, String fullName, String phone, String imageUri) {
         this.id = id;
+        this.email = email;
         this.fullName = fullName;
         this.phone = phone;
         this.imageUri = imageUri;

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -45,10 +46,11 @@ public class CreateTourActivity extends AppCompatActivity {
 
     private Bitmap imageBt;
     private TextInputEditText description, startPoint, destination, maxTourists, date, name, startTime, endTime;
-    private AppCompatImageView image, camera, gallery;
+    private AppCompatImageView image, camera, gallery, plus, minus;
     private Spinner time, duration;
     private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    Button save;
+    LinearLayout registerContainer;
+    Button save, limit;
     private boolean openByStartPoint = true;
     private Address stratAddress, endAddress;
     private String imageUrl;
@@ -112,6 +114,10 @@ public class CreateTourActivity extends AppCompatActivity {
         gallery = findViewById(R.id.gallery);
         camera = findViewById(R.id.take_photo);
         image = findViewById(R.id.image);
+        registerContainer = findViewById(R.id.register_tour_container);
+        plus = findViewById(R.id.plus);
+        minus = findViewById(R.id.minus);
+        limit = findViewById(R.id.limit);
 
         gallery.setOnClickListener(V-> openGallery());
         camera.setOnClickListener(V-> openCamera());
@@ -136,6 +142,7 @@ public class CreateTourActivity extends AppCompatActivity {
 
     private void initilizeScreen() {
         if(tour != null) {
+            save.setVisibility(View.GONE);
             name.setText(tour.getName());
             name.setEnabled(false);
             startPoint.setText(tour.getStartLocation().getTitle());
@@ -162,6 +169,27 @@ public class CreateTourActivity extends AppCompatActivity {
             save.setText(R.string.register_to_tour);
             save.setOnClickListener(v -> onRegisterToTourClicked());
             save.setEnabled(tour.getLimPeople() > 0);
+            registerContainer.setVisibility(View.VISIBLE);
+            limit.setText("0");
+            plus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int number = Integer.parseInt(limit.getText().toString());
+                    if (number < tour.getLimPeople())
+                    limit.setText(String.valueOf(number + 1));
+                }
+            });
+
+            minus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int number = Integer.parseInt(limit.getText().toString() );
+                    if (number > 0) {
+                        limit.setText(String.valueOf(number - 1));
+                    }
+                }
+            });
+
         }
     }
 

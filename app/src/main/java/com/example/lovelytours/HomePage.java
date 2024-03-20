@@ -84,7 +84,7 @@ public class HomePage extends AppCompatActivity {
                         .commit();
             } else if (itemId == R.id.button_pageBar_profile) {
                 if (profileFragment == null) {
-                    profileFragment = new profile();
+                    profileFragment = new ProfileFragment();
                 }
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
