@@ -14,9 +14,8 @@ import java.util.function.Consumer;
 
 public class DataBaseManager {
 
-    private static final String USERS = "Users";
-
     private static final String GUIDES = "Guides";
+
     private static final String TOURISTS = "Tourists";
 
     private static final String TOURS = "Tours";
@@ -75,6 +74,15 @@ public class DataBaseManager {
         FirebaseDatabase.getInstance()
                 .getReference(TOURS)
                 .child(id)
+                .get()
+                .addOnSuccessListener(listener);
+    }
+
+
+    public static void getTourParticipates(Tour tour, OnSuccessListener<DataSnapshot> listener) {
+
+        FirebaseDatabase.getInstance()
+                .getReference(TOURISTS)
                 .get()
                 .addOnSuccessListener(listener);
     }

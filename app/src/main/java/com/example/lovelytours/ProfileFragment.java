@@ -46,6 +46,7 @@ public class ProfileFragment extends Fragment {
     EditText fullNameET, phoneET, emailET;
     ImageView profileIV, editIV;
     StorageReference myStorage;
+    Button signOut;
     Bitmap imageBt;
 
     private final ActivityResultLauncher<Intent> takePhotoLauncher = registerForActivityResult(
@@ -81,6 +82,8 @@ public class ProfileFragment extends Fragment {
         profileIV = view.findViewById(R.id.profile);
         editIV = view.findViewById(R.id.edit);
         editIV.setOnClickListener(v -> onEditClick());
+        signOut = view.findViewById(R.id.sign_out);
+        signOut.setOnClickListener(v -> signOut());
         return view;
     }
 
@@ -88,7 +91,6 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent(requireContext(), RegisterActivity.class);
         startActivity(intent);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -102,5 +104,13 @@ public class ProfileFragment extends Fragment {
         fullNameET.setText(Session.getSession().getCurrentUser().getFullName());
         phoneET.setText(Session.getSession().getCurrentUser().getPhone());
         emailET.setText(Session.getSession().getCurrentUser().getEmail());
+    }
+
+    private void signOut(){
+        FirebaseAuth.getInstance().signOut();
+        Session.getSession().setCurrentUser(null);
+        Intent intent = new Intent(requireContext(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

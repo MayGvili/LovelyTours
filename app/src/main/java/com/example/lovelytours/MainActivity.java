@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     user = dataSnapshot.getValue(Tourist.class);
                 }
                 Session.getSession().setCurrentUser(user);
-                Intent intent = new Intent(MainActivity.this, HomePage.class);
+                Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -64,6 +64,7 @@ public class NearByFragment extends Fragment {
                 findMyLocationIfHasAccess();
                 fetchTours();
                 map = googleMap;
+                map.getUiSettings().setZoomControlsEnabled(true);
             }
         });
 
@@ -103,7 +104,7 @@ public class NearByFragment extends Fragment {
             @Override
             public void accept(List<Tour> tours) {
                 toursList.addAll(tours);
-                filterTours();
+                //filterTours();
                 placeLocations();
             }
         });
@@ -116,7 +117,6 @@ public class NearByFragment extends Fragment {
                 public void accept(Tour tour) {
                     LatLng latLng = new LatLng(tour.getStartLocation().getLatitude(), tour.getStartLocation().getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(tour.getName()));
-//                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f));
                 }
             });
 

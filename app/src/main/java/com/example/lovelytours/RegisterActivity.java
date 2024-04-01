@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -205,7 +204,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         public void onSuccess(Object o) {
                             progressBar.dismiss();
                             Session.getSession().setCurrentUser(user);
-                            Intent intent= new Intent(RegisterActivity.this, HomePage.class);
+                            Intent intent= new Intent(RegisterActivity.this, HomePageActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -223,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onSuccess(Object o) {
                 Session.getSession().setCurrentUser(user);
                 //save to shared prf
-                Intent intent= new Intent(RegisterActivity.this, HomePage.class);
+                Intent intent= new Intent(RegisterActivity.this, HomePageActivity.class);
                 startActivity(intent);
                 finish();
             }
