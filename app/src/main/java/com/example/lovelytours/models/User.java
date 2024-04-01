@@ -57,7 +57,9 @@ public class User implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public String getImageUri() { return imageUri;}
+
     public void setImageUri(String imageUri) {this.imageUri = imageUri;}
 
     public List<String> getToursIdsList() {

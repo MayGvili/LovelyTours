@@ -29,5 +29,15 @@
     <string name="please_wait">Please wait...</string>
     <string name="my_location">My Location</string>
     <string name="available_tomrrow">Available tomorrow</string>
+    <string name="click_to_order">"Click to order %1$d tickets "</string>
+    <string name="order_successfully">Order successfully</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="alarm">Alarm!</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="pay_attention">This permission is required for alert befote tour begining</string>
+    <string name="tour_notification">"Your tour to %1$s is coming up about 1 hour.\nDon't forget to arrive to the start point at %2$s "</string>
+    <string name="search">Search</string>
 
 </resources>

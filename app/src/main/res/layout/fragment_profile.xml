@@ -48,11 +48,12 @@
         android:src="@drawable/bg_border"/>
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:enabled="false"
+        android:layout_marginHorizontal="32dp"
         android:layout_gravity="center"
         android:textColor="@color/SaddleBrown"
         android:hint="enter your Full name"
@@ -61,7 +62,7 @@
         android:id="@+id/etFullname"/>
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
@@ -69,15 +70,18 @@
         android:layout_gravity="center"
         android:textColor="@color/SaddleBrown"
         android:hint="enter your Phone number"
+        android:drawableRight="@drawable/phone_icon"
+        android:layout_marginHorizontal="32dp"
         android:textColorHint="@color/SaddleBrown"
         android:inputType="number"
         android:id="@+id/etPhonenumber"/>
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:layout_marginHorizontal="32dp"
         android:layout_gravity="center"
         android:textColor="@color/SaddleBrown"
         android:hint="enter your Email"
@@ -86,6 +90,14 @@
         android:drawableRight="@drawable/email_icon"
         android:inputType="textWebEmailAddress"
         android:id="@+id/regEmail"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign_out"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:text="@string/sign_out"/>
 
 </LinearLayout>
 

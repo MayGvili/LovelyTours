@@ -1,6 +1,7 @@
 package com.example.lovelytours.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Tour implements Serializable
 {
@@ -15,6 +16,8 @@ public class Tour implements Serializable
 
     private Location startLocation;
     private Location destination;
+    private ArrayList<String> participatedIds = new ArrayList<>();
+
 
     public Tour(String id, int limPeople, long date, String description, String image, String name, String startTime, String endTime, Location startLocation, Location destination) {
         this.id = id;
@@ -109,5 +112,13 @@ public class Tour implements Serializable
 
     public void setDestination(Location destination) {
         this.destination = destination;
+    }
+
+    public ArrayList<String> getParticipatedIds() {
+        return participatedIds;
+    }
+
+    public void setParticipatedIds(ArrayList<String> participatedIds) {
+        this.participatedIds = participatedIds;
     }
 }

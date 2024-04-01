@@ -1,5 +1,7 @@
 package com.example.lovelytours;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -7,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -22,12 +28,14 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.lovelytours.alarmmanager.AlarmReceiver;
 import com.example.lovelytours.models.Location;
 import com.example.lovelytours.models.Tour;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,13 +57,14 @@ public class CreateTourActivity extends AppCompatActivity {
     private AppCompatImageView image, camera, gallery, plus, minus;
     private Spinner time, duration;
     private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-    LinearLayout registerContainer;
-    Button save, limit;
+    private LinearLayout registerContainer;
+    private Button save, limit;
     private boolean openByStartPoint = true;
     private Address stratAddress, endAddress;
     private String imageUrl;
     private long dateTimestamp;
     private Tour tour;
+    private int tickets = 0;
 
 
     private final ActivityResultLauncher<Intent> takePhotoLauncher = registerForActivityResult(
@@ -170,26 +179,72 @@ public class CreateTourActivity extends AppCompatActivity {
             save.setOnClickListener(v -> onRegisterToTourClicked());
             save.setEnabled(tour.getLimPeople() > 0);
             registerContainer.setVisibility(View.VISIBLE);
-            limit.setText("0");
+            limit.setText(getString(R.string.click_to_order, tickets));
             plus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int number = Integer.parseInt(limit.getText().toString());
-                    if (number < tour.getLimPeople())
-                    limit.setText(String.valueOf(number + 1));
-                }
-            });
-
-            minus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int number = Integer.parseInt(limit.getText().toString() );
-                    if (number > 0) {
-                        limit.setText(String.valueOf(number - 1));
+                    if (tickets < tour.getLimPeople()){
+                        limit.setText(getString(R.string.click_to_order, ++tickets));
                     }
+
                 }
             });
 
+            minus.setOnClickListener(view -> {
+                if (tickets > 0) {
+                    limit.setText(getString(R.string.click_to_order, --tickets));
+                }
+            });
+
+            limit.setOnClickListener(view -> orderTickets());
+
+        }
+    }
+
+    private void orderTickets() {
+        AlertDialogManager.showConfirmMessage(this, getString(R.string.alarm),
+                getString(R.string.are_you_sure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tour.setLimPeople(tour.getLimPeople() - tickets);
+                        tour.getParticipatedIds().add(Session.getSession().getCurrentUser().getId());
+                        DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                registerToNotification(tour);
+                                Toast.makeText(CreateTourActivity.this, getString(R.string.order_successfully), Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        });                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+    }
+
+    private void registerToNotification(Tour tour) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(tour.getDate());
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("tour", tour);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        // Set up the AlarmManager
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(ALARM_SERVICE);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            } else {
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
         }
     }
 
@@ -208,12 +263,9 @@ public class CreateTourActivity extends AppCompatActivity {
     private void openTimePicker(TextInputEditText et) {
         Calendar calendar = Calendar.getInstance();
 
-        // on below line we are getting our hour, minute.
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        // on below line we are initializing
-        // our Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(
                 this, new TimePickerDialog.OnTimeSetListener() {
             @Override
