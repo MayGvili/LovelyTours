@@ -184,8 +184,7 @@ public class CreateTourActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (tickets < tour.getLimPeople()){
-                        limit.setTag(++tickets);
-                        limit.setText(getString(R.string.click_to_order, tickets));
+                        limit.setText(getString(R.string.click_to_order, ++tickets));
                     }
 
                 }
@@ -193,7 +192,7 @@ public class CreateTourActivity extends AppCompatActivity {
 
             minus.setOnClickListener(view -> {
                 if (tickets > 0) {
-                    limit.setText(String.valueOf(--tickets));
+                    limit.setText(getString(R.string.click_to_order, --tickets));
                 }
             });
 
