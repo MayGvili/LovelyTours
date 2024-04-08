@@ -1,19 +1,25 @@
 package com.example.lovelytours;
 
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lovelytours.models.Tour;
@@ -23,16 +29,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -45,6 +51,7 @@ public class NearByFragment extends Fragment {
     private List<Tour> toursList = new ArrayList<>();
     private FusedLocationProviderClient fusedLocationClient;
     private Location myLocation;
+    private TextView title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +63,7 @@ public class NearByFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        title = view.findViewById(R.id.title);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
         SupportMapFragment supportMapFragment = (SupportMapFragment)this.getChildFragmentManager().findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -72,6 +80,7 @@ public class NearByFragment extends Fragment {
 
     private void filterTours() {
         Calendar calendar = Calendar.getInstance();
+        calendar.clear();
         Calendar temp = Calendar.getInstance();
         temp.add(Calendar.DAY_OF_YEAR, 1);
         int tomorrow = temp.get(Calendar.DAY_OF_YEAR);
@@ -80,6 +89,7 @@ public class NearByFragment extends Fragment {
             @Override
             public boolean test(Tour tour) {
                 if (tour.getLimPeople() > 0) {
+                    temp.clear();
                     temp.setTimeInMillis(tour.getDate());
                     int day = temp.get(Calendar.DAY_OF_YEAR);
                     return (tomorrow == day);
@@ -87,6 +97,7 @@ public class NearByFragment extends Fragment {
                 return false;
             }
         }).collect(Collectors.toList());
+        title.setText(getString(R.string.available_tomrrow, toursList.size()));
     }
 
     @Override
@@ -104,8 +115,9 @@ public class NearByFragment extends Fragment {
             @Override
             public void accept(List<Tour> tours) {
                 toursList.addAll(tours);
-                //filterTours();
+                filterTours();
                 placeLocations();
+
             }
         });
     }
@@ -158,5 +170,17 @@ public class NearByFragment extends Fragment {
             map.addMarker(new MarkerOptions().position(latLng).title(getString(R.string.my_location)));
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f));
         }
+    }
+
+    private BitmapDescriptor bitmapDescriptorFromVector() {
+        Drawable background = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_location_on_24);
+        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
+        Drawable vectorDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.baseline_location_on_24);
+        vectorDrawable.setBounds(40, 20, vectorDrawable.getIntrinsicWidth() + 40, vectorDrawable.getIntrinsicHeight() + 20);
+        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        background.draw(canvas);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }

@@ -1,7 +1,5 @@
 package com.example.lovelytours;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -35,7 +33,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -49,7 +46,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.UUID;
 
-public class CreateTourActivity extends AppCompatActivity {
+public class CreateOrRegisterTourActivity extends AppCompatActivity {
 
 
     private Bitmap imageBt;
@@ -146,10 +143,10 @@ public class CreateTourActivity extends AppCompatActivity {
         startTime.setOnClickListener(v-> openTimePicker(startTime));
         endTime.setOnClickListener(v-> openTimePicker(endTime));
         
-        initilizeScreen();
+        initializeScreen();
     }
 
-    private void initilizeScreen() {
+    private void initializeScreen() {
         if(tour != null) {
             save.setVisibility(View.GONE);
             name.setText(tour.getName());
@@ -180,10 +177,12 @@ public class CreateTourActivity extends AppCompatActivity {
             save.setEnabled(tour.getLimPeople() > 0);
             registerContainer.setVisibility(View.VISIBLE);
             limit.setText(getString(R.string.click_to_order, tickets));
+            limit.setEnabled(false);
             plus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (tickets < tour.getLimPeople()){
+                        limit.setEnabled(true);
                         limit.setText(getString(R.string.click_to_order, ++tickets));
                     }
 
@@ -193,6 +192,7 @@ public class CreateTourActivity extends AppCompatActivity {
             minus.setOnClickListener(view -> {
                 if (tickets > 0) {
                     limit.setText(getString(R.string.click_to_order, --tickets));
+                    limit.setEnabled(tickets != 0);
                 }
             });
 
@@ -212,7 +212,8 @@ public class CreateTourActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void unused) {
                                 registerToNotification(tour);
-                                Toast.makeText(CreateTourActivity.this, getString(R.string.order_successfully), Toast.LENGTH_LONG).show();
+                                Toast.makeText(CreateOrRegisterTourActivity.this, getString(R.string.order_successfully), Toast.LENGTH_LONG).show();
+                                FirebaseMessagingManager.sendNotificationToGuide(CreateOrRegisterTourActivity.this, tickets, Session.getSession().getCurrentUser(), tour);
                                 finish();
                             }
                         });                    }
@@ -253,7 +254,7 @@ public class CreateTourActivity extends AppCompatActivity {
         DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(CreateTourActivity.this, getText(R.string.registration_successfully), Toast.LENGTH_LONG).show();
+                Toast.makeText(CreateOrRegisterTourActivity.this, getText(R.string.registration_successfully), Toast.LENGTH_LONG).show();
                 setResult(Activity.RESULT_OK);
                 finish();
             }
@@ -341,7 +342,7 @@ public class CreateTourActivity extends AppCompatActivity {
                         saveTourTODataBase(id);
                     });
                 } else {
-                    AlertDialogManager.showMessage(CreateTourActivity.this, getString(R.string.error), task.getException().getMessage());
+                    AlertDialogManager.showMessage(CreateOrRegisterTourActivity.this, getString(R.string.error), task.getException().getMessage());
                 }
             }
         });
@@ -357,7 +358,8 @@ public class CreateTourActivity extends AppCompatActivity {
         DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(CreateTourActivity.this, getText(R.string.tour_created), Toast.LENGTH_SHORT).show();
+                FirebaseMessagingManager.subscribeToPushIfNeeded(id);
+                Toast.makeText(CreateOrRegisterTourActivity.this, getText(R.string.tour_created), Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

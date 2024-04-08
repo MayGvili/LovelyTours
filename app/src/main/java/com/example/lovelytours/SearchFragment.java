@@ -79,7 +79,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void openTourDetails(int position) {
-        Intent intent = new Intent(this.getContext(), CreateTourActivity.class);
+        Intent intent = new Intent(this.getContext(), CreateOrRegisterTourActivity.class);
         intent.putExtra("tour", tours.get(position));
         startActivity(intent);
     }
