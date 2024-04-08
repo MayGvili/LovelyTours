@@ -22,7 +22,7 @@
         android:theme="@style/Theme.Material3.Light"
         tools:targetApi="31">
         <activity
-            android:name=".CreateTourActivity"
+            android:name=".CreateOrRegisterTourActivity"
             android:exported="false" />
         <activity
             android:name=".OrderTicket"
@@ -61,6 +61,22 @@
             android:value="AIzaSyD4Bga_YWU6bv90wVbspkQb-PKMSVw3NYw"></meta-data>
 
         <receiver android:name=".alarmmanager.AlarmReceiver" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/black" />
 
     </application>
 

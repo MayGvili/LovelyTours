@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,7 +52,7 @@ public class MyToursFragment extends Fragment {
         createBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CreateTourActivity.class);
+                Intent intent = new Intent(getContext(), CreateOrRegisterTourActivity.class);
                 startActivity(intent);
             }
         });
