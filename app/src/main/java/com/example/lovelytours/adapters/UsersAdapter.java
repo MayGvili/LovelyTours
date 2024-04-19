@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lovelytours.callbacks.OnItemClickedListener;
-import com.example.lovelytours.models.Tour;
+import com.example.lovelytours.R;
 import com.example.lovelytours.models.Tourist;
 import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHolder> {

@@ -34,6 +34,14 @@
             android:layout_height="1dp"
             android:background="@color/Gray"/>
 
+        <ImageView
+            android:id="@+id/favorite"
+            android:padding="8dp"
+            android:src="@drawable/baseline_unfavorite"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <TextView
             android:layout_marginTop="8dp"
             android:id="@+id/date"

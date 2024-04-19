@@ -10,6 +10,10 @@
         android:id="@+id/my_tours"
         android:title="@string/my_tours"
         android:icon="@drawable/search_icon"/>
+<!--    <item-->
+<!--        android:id="@+id/favorite"-->
+<!--        android:title="@string/favorites"-->
+<!--        android:icon="@drawable/baseline_favorite_24"/>-->
     <item
         android:id="@+id/button_pageBar_nearby"
         android:title="Nearby"

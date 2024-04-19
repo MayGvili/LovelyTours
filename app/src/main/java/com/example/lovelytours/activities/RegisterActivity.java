@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.activities;
 
 
 import android.app.Activity;
@@ -21,12 +21,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import com.example.lovelytours.AlertDialogManager;
+import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.R;
+import com.example.lovelytours.Session;
 import com.example.lovelytours.models.Guide;
 import com.example.lovelytours.models.Tourist;
 import com.example.lovelytours.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -41,7 +46,7 @@ import java.io.IOException;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     FirebaseAuth myAuth;
     StorageReference myStorage;
-    EditText etFullname , etPhonenumber, regEmail, regPassword;
+    TextInputEditText etFullname , etPhonenumber, regEmail, regPassword;
     Button btnRegister;
     TextView title;
     AppCompatImageView cameraImg, galleryImg, profileImg;

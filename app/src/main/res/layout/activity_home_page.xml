@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".HomePageActivity">
+    tools:context=".activities.HomePageActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bottomNavigationView"
-        app:menu="@menu/button_menu"
-        app:itemPaddingBottom="15dp" />
+        app:menu="@menu/button_menu" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -8,6 +8,13 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
+import com.example.lovelytours.AlertDialogManager;
+import com.example.lovelytours.fragments.ToursFragment;
+import com.example.lovelytours.fragments.NearByFragment;
+import com.example.lovelytours.fragments.ProfileFragment;
+import com.example.lovelytours.R;
+import com.example.lovelytours.fragments.SearchFragment;
+import com.example.lovelytours.Session;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -68,7 +75,7 @@ public class HomePageActivity extends AppCompatActivity {
                         .commit();
             } else if (itemId == R.id.my_tours || itemId == R.id.tickets) {
                 if (myToursFragment == null) {
-                    myToursFragment = new MyToursFragment();
+                    myToursFragment = new ToursFragment(false);
                 }
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
@@ -79,7 +86,7 @@ public class HomePageActivity extends AppCompatActivity {
             return true;
         });
 
-        Fragment firstFragment = Session.getSession().isGuide() ? new MyToursFragment() : new SearchFragment();
+        Fragment firstFragment = Session.getSession().isGuide() ? new ToursFragment(false) : new SearchFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.framfragment_container, firstFragment).commit();
     }
 

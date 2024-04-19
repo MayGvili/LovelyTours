@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.activities;
 
 
 import android.app.Dialog;
@@ -17,6 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.lovelytours.AlertDialogManager;
+import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.R;
+import com.example.lovelytours.Session;
 import com.example.lovelytours.models.Guide;
 import com.example.lovelytours.models.Tourist;
 import com.example.lovelytours.models.User;

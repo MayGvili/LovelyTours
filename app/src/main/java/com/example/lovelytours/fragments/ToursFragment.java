@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,30 +16,38 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lovelytours.activities.CreateOrRegisterTourActivity;
+import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.R;
+import com.example.lovelytours.Session;
+import com.example.lovelytours.adapters.TourAdapter;
+import com.example.lovelytours.TourParticipateDialog;
 import com.example.lovelytours.callbacks.OnItemClickedListener;
 import com.example.lovelytours.models.Tour;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
+import com.example.lovelytours.models.TourData;
+import com.example.lovelytours.models.Tourist;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class MyToursFragment extends Fragment {
+public class ToursFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private AppCompatButton createBT;
-    private ArrayList<Tour> filterToursList = new ArrayList<>();
-    private ArrayList<Tour> tourArrayList = new ArrayList<>();
-    private TourAdapter adapter = new TourAdapter(filterToursList, new OnItemClickedListener() {
-        @Override
-        public void onItemClicked(int position) {
-            if (Session.getSession().isGuide()) {
-                onTourClicked(position);
-            }
+    private ArrayList<TourData> filterToursList = new ArrayList<>();
+    private ArrayList<TourData> tourArrayList = new ArrayList<>();
+    private TourAdapter adapter = new TourAdapter(filterToursList, (OnItemClickedListener) position -> {
+        if (Session.getSession().isGuide()) {
+            onTourClicked(position);
         }
     });
+    private boolean showFavorites = false;
+
+    public ToursFragment(boolean showFavorites) {
+        this.showFavorites = showFavorites;
+    }
 
     @Nullable
     @Override
@@ -68,10 +76,10 @@ public class MyToursFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 filterToursList.clear();
-                filterToursList.addAll(tourArrayList.stream().filter(new Predicate<Tour>() {
+                filterToursList.addAll(tourArrayList.stream().filter(new Predicate<TourData>() {
                     @Override
-                    public boolean test(Tour tour) {
-                        return charSequence.toString().startsWith(tour.getName()) || charSequence.toString().isEmpty();
+                    public boolean test(TourData tourData) {
+                        return charSequence.toString().startsWith(tourData.getTour().getName()) || charSequence.toString().isEmpty();
                     }
                 }).collect(Collectors.toList()));
                 adapter.notifyDataSetChanged();
@@ -91,24 +99,21 @@ public class MyToursFragment extends Fragment {
     private void fetchTours() {
         tourArrayList.clear();
         filterToursList.clear();
-        List<String> ids = Session.getSession().getCurrentUser().getToursIdsList();
+        List<String> ids = showFavorites ? ((Tourist)Session.getSession().getCurrentUser()).getFavoriteToursId() : Session.getSession().getCurrentUser().getToursIdsList();
         for (int i = 0; i < ids.size(); i++) {
             int finalI = i;
-            DataBaseManager.getTour(ids.get(i), new OnSuccessListener<DataSnapshot>() {
-                @Override
-                public void onSuccess(DataSnapshot dataSnapshot) {
-                    tourArrayList.add(finalI, dataSnapshot.getValue(Tour.class));
-                    if (finalI == ids.size() - 1) {
-                        filterToursList.addAll(tourArrayList);
-                        adapter.notifyDataSetChanged();
-                    }
+            DataBaseManager.getTour(ids.get(i), dataSnapshot -> {
+                tourArrayList.add(finalI, new TourData(dataSnapshot.getValue(Tour.class), false));
+                if (finalI == ids.size() - 1) {
+                    filterToursList.addAll(tourArrayList);
+                    adapter.notifyDataSetChanged();
                 }
             });
         }
     }
 
     private void onTourClicked(int position) {
-        Tour tour = filterToursList.get(position);
+        Tour tour = filterToursList.get(position).getTour();
         new TourParticipateDialog(requireContext(), tour).show();
     }
 

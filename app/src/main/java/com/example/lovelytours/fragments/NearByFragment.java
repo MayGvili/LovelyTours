@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.fragments;
 
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.R;
 import com.example.lovelytours.models.Tour;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;

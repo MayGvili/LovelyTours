@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lovelytours.R;
 import com.example.lovelytours.callbacks.OnItemClickedListener;
 import com.example.lovelytours.models.Tour;
+import com.example.lovelytours.models.TourData;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -19,16 +21,22 @@ import java.util.ArrayList;
 
 public class TourAdapter extends RecyclerView.Adapter<TourAdapter.TourViewHolder> {
     private final OnItemClickedListener listener;
-    private ArrayList<Tour> tours;
+    private ArrayList<TourData> tours;
     private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private boolean showFavoriteButton;
+    private OnItemClickedListener favoriteListener;
 
-
-
-    public TourAdapter(ArrayList<Tour> tours, OnItemClickedListener listener) {
+    public TourAdapter(ArrayList<TourData> tours, OnItemClickedListener listener) {
         this.tours = tours;
         this.listener = listener;
     }
 
+    public TourAdapter(ArrayList<TourData> tours, boolean showFavoriteButton, OnItemClickedListener listener, OnItemClickedListener favoriteListener) {
+        this.tours = tours;
+        this.listener = listener;
+        this.showFavoriteButton = showFavoriteButton;
+        this.favoriteListener = favoriteListener;
+    }
 
     @NonNull
     @Override
@@ -39,7 +47,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.TourViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TourViewHolder holder, int position) {
-        Tour tour = tours.get(position);
+        Tour tour = tours.get(position).getTour();
         Picasso.get().load(tour.getImage())
                 .centerCrop()
                 .fit()
@@ -53,6 +61,20 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.TourViewHolder
             }
         });
         holder.name.setText(tour.getName());
+        if (showFavoriteButton) {
+            holder.favorite.setOnClickListener(v-> {
+                favoriteListener.onItemClicked(position);
+            });
+            holder.favorite.setVisibility(View.VISIBLE);
+            if (tours.get(position).isFavorite()) {
+                holder.favorite.setImageResource(R.drawable.baseline_favorite_24);
+            } else {
+                holder.favorite.setImageResource(R.drawable.baseline_unfavorite);
+            }
+        } else {
+            holder.favorite.setVisibility(View.GONE);
+        }
+
     }
 
 
@@ -63,7 +85,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.TourViewHolder
 
     public static class TourViewHolder extends RecyclerView.ViewHolder {
         public TextView name, date, time;
-        public ImageView image;
+        public ImageView image, favorite;
 
         public TourViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,6 +93,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.TourViewHolder
             date = itemView.findViewById(R.id.date);
             time = itemView.findViewById(R.id.time);
             image = itemView.findViewById(R.id.image);
+            favorite = itemView.findViewById(R.id.favorite);
         }
     }
 }
