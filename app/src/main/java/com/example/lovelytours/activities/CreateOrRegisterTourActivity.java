@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.activities;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -26,6 +26,11 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.lovelytours.AlertDialogManager;
+import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.FirebaseMessagingManager;
+import com.example.lovelytours.R;
+import com.example.lovelytours.Session;
 import com.example.lovelytours.alarmmanager.AlarmReceiver;
 import com.example.lovelytours.models.Location;
 import com.example.lovelytours.models.Tour;

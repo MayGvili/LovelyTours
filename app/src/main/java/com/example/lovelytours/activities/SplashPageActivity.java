@@ -1,17 +1,17 @@
-package com.example.lovelytours;
+package com.example.lovelytours.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.WindowManager;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.lovelytours.R;
+import com.example.lovelytours.activities.MainActivity;
 
-public class SplashPage extends AppCompatActivity {
+public class SplashPageActivity extends AppCompatActivity {
     Intent intent;
     LottieAnimationView lottie;
 

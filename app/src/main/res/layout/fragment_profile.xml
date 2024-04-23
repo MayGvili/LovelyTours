@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#8FFFE4C4"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <LinearLayout
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|center_vertical">
@@ -47,55 +46,81 @@
         android:cropToPadding="true"
         android:src="@drawable/bg_border"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:enabled="false"
-        android:layout_marginHorizontal="32dp"
         android:layout_gravity="center"
-        android:textColor="@color/SaddleBrown"
-        android:hint="enter your Full name"
-        android:textColorHint="@color/SaddleBrown"
-        android:drawableRight="@drawable/name_icon"
-        android:id="@+id/etFullname"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:enabled="false"
-        android:layout_gravity="center"
-        android:textColor="@color/SaddleBrown"
-        android:hint="enter your Phone number"
-        android:drawableRight="@drawable/phone_icon"
+        android:hint="@string/your_name"
+        android:focusable="true"
         android:layout_marginHorizontal="32dp"
         android:textColorHint="@color/SaddleBrown"
-        android:inputType="number"
-        android:id="@+id/etPhonenumber"/>
+        android:layout_height="wrap_content">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/etFullname"
+            android:focusable="true"
+            android:drawableRight="@drawable/name_icon"
+            android:textColor="@color/SaddleBrown"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:layout_marginHorizontal="32dp"
         android:layout_gravity="center"
-        android:textColor="@color/SaddleBrown"
-        android:hint="enter your Email"
-        android:enabled="false"
+        android:hint="@string/your_phone"
+        android:focusable="true"
+        android:layout_marginHorizontal="32dp"
         android:textColorHint="@color/SaddleBrown"
-        android:drawableRight="@drawable/email_icon"
-        android:inputType="textWebEmailAddress"
-        android:id="@+id/regEmail"/>
+        android:layout_height="wrap_content">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/etPhonenumber"
+            android:focusable="true"
+            android:inputType="phone"
+            android:drawableRight="@drawable/phone_icon"
+            android:textColor="@color/SaddleBrown"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:hint="@string/your_email"
+        android:focusable="true"
+        android:layout_marginHorizontal="32dp"
+        android:textColorHint="@color/SaddleBrown"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/regEmail"
+            android:focusable="true"
+            android:inputType="phone"
+            android:drawableRight="@drawable/email_icon"
+            android:textColor="@color/SaddleBrown"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/favorite"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/Orange"
+        android:text="@string/favorites"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sign_out"
         android:layout_marginTop="16dp"
+        android:textColor="@color/Orange"
+        android:backgroundTint="@color/red"
         android:layout_gravity="center"
         android:text="@string/sign_out"/>
 

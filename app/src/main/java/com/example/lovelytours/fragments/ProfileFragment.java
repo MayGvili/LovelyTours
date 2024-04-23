@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,58 +19,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.lovelytours.models.Guide;
-import com.example.lovelytours.models.Tourist;
-import com.example.lovelytours.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.lovelytours.R;
+import com.example.lovelytours.activities.RegisterActivity;
+import com.example.lovelytours.Session;
+import com.example.lovelytours.activities.MainActivity;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
 public class ProfileFragment extends Fragment {
 
-    EditText fullNameET, phoneET, emailET;
+    TextInputEditText fullNameET, phoneET, emailET;
     ImageView profileIV, editIV;
     StorageReference myStorage;
-    Button signOut;
+    Button signOut, favoriteBT;
     Bitmap imageBt;
 
-    private final ActivityResultLauncher<Intent> takePhotoLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    imageBt = (Bitmap) result.getData().getExtras().get("data");
-                    profileIV.setImageBitmap(imageBt);
-                }
-
-            });
-
-    private ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Uri uri = result.getData().getData();
-                    try {
-                        imageBt = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
-                        profileIV.setImageBitmap(imageBt);
-                    } catch (IOException e) {
-                    }
-                }
-            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,7 +54,13 @@ public class ProfileFragment extends Fragment {
         editIV.setOnClickListener(v -> onEditClick());
         signOut = view.findViewById(R.id.sign_out);
         signOut.setOnClickListener(v -> signOut());
+        favoriteBT = view.findViewById(R.id.favorite);
+        favoriteBT.setOnClickListener(v -> openFavoriteScreen());
         return view;
+    }
+
+    private void openFavoriteScreen() {
+        startActivity(new Intent(getActivity(), FavoritesActivity.class));
     }
 
     private void onEditClick() {

@@ -2,13 +2,9 @@ package com.example.lovelytours;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,13 +12,13 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lovelytours.adapters.UsersAdapter;
 import com.example.lovelytours.models.Tour;
 import com.example.lovelytours.models.Tourist;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class TourParticipateDialog extends Dialog {
 

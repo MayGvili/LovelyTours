@@ -20,7 +20,7 @@ public class DataBaseManager {
 
     private static final String TOURS = "Tours";
 
-    public static void saveUser(User user, OnSuccessListener listener) {
+    public static void saveUser(User user, OnSuccessListener<Void> listener) {
         FirebaseDatabase.getInstance()
                 .getReference(user instanceof Tourist ? TOURISTS : GUIDES)
                 .child(user.getId())

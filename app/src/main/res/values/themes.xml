@@ -11,4 +11,8 @@
 
     <style name="Theme.LovelyTours" parent="Base.Theme.LovelyTours" />
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/red</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.lovelytours;
+package com.example.lovelytours.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 
+import com.example.lovelytours.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;

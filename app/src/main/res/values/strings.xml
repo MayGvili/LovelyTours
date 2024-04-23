@@ -40,5 +40,13 @@
     <string name="tour_notification">"Your tour to %1$s is coming up about 1 hour.\nDon't forget to arrive to the start point at %2$s "</string>
     <string name="search">Search</string>
     <string name="you_have_a_new_tour_registration">"<![CDATA[<b>%1$s</b>]]> buy <![CDATA[<b>%2$d</b>]]> tickets to your <![CDATA[<b>%3$s</b>]]> tour."</string>
+    <string name="tour_favorite">Tour is successfully added.</string>
+    <string name="favorites">Favorites</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_phone">Your Phone</string>
+    <string name="your_email">Your Email</string>
+    <string name="enter_phone">Enter Phone</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_password">Enter password</string>
 
 </resources>
