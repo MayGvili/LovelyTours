@@ -36,7 +36,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Tour tour = (Tour) intent.getSerializableExtra("tour");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "channel_id")
                 .setContentTitle(tour.getName())
-                .setSmallIcon(R.drawable.account_icon)
+                .setSmallIcon(R.drawable.baseline_how_to_reg_24)
                 .setContentText(context.getString(R.string.tour_notification, tour.getDestination().getTitle(), tour.getStartLocation().getTitle()))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 

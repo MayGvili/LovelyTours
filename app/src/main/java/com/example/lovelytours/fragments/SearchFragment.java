@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.FirebaseMessagingManager;
 import com.example.lovelytours.Session;
 import com.example.lovelytours.activities.CreateOrRegisterTourActivity;
 import com.example.lovelytours.R;
@@ -138,9 +139,12 @@ public class SearchFragment extends Fragment {
     }
 
     private void openTourDetails(int position) {
-        Intent intent = new Intent(this.getContext(), CreateOrRegisterTourActivity.class);
-        intent.putExtra("tour", tours.get(position).getTour());
-        startActivity(intent);
+        FirebaseMessagingManager.subscribeToPushIfNeeded(tours.get(position).getTour().getId());
+        FirebaseMessagingManager.sendNotificationToGuide(getActivity(), 5, Session.getSession().getCurrentUser(), tours.get(position).getTour());
+
+//        Intent intent = new Intent(this.getContext(), CreateOrRegisterTourActivity.class);
+//        intent.putExtra("tour", tours.get(position).getTour());
+//        startActivity(intent);
     }
 
 }
