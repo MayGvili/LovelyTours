@@ -29,6 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/Orange"
             android:layout_gravity="bottom|end"
             android:text="@string/create_tour"/>
     </FrameLayout>
