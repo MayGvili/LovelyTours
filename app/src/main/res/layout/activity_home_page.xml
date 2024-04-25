@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/orange_light"
     tools:context=".activities.HomePageActivity">
 
     <FrameLayout
@@ -19,6 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bottomNavigationView"
+        app:itemIconTint="@color/Orange"
+        app:itemTextColor="@color/Orange"
+        android:background="@color/red"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"
         app:menu="@menu/button_menu" />
 
 </LinearLayout>

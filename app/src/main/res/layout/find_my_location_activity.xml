@@ -30,6 +30,8 @@
 
         <Button
             android:id="@+id/save"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/Orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save Location"/>

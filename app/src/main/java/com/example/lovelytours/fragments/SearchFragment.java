@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.lovelytours.DataBaseManager;
@@ -32,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 public class SearchFragment extends Fragment {
@@ -42,19 +46,43 @@ public class SearchFragment extends Fragment {
     BottomNavigationView bottomNavigation1;
     Tour tour;
     TourAdapter tourAdapter;
+    private ArrayList<TourData> filterToursList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search,container,false);
+        EditText searchET = view.findViewById(R.id.search);
+        searchET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                filterToursList.clear();
+                filterToursList.addAll(tours.stream().filter(new Predicate<TourData>() {
+                    @Override
+                    public boolean test(TourData tourData) {
+                        return charSequence.toString().contains(tourData.getTour().getDescription()) || charSequence.toString().isEmpty();
+                    }
+                }).collect(Collectors.toList()));
+                tourAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         myData = FirebaseDatabase.getInstance();
         myRef = myData.getReference("Tours");
         tours = new ArrayList<>();
         myRecycle = view.findViewById(R.id.myRecycle);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         myRecycle.setLayoutManager(layoutManager);
-        tourAdapter = new TourAdapter(tours, true, position -> {
+        tourAdapter = new TourAdapter(filterToursList, true, position -> {
             openTourDetails(position);
         }, position -> {
             saveTourToFavorite(position);
@@ -83,6 +111,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 tours.clear();
+                filterToursList.clear();
                 Iterable<DataSnapshot> children = snapshot.getChildren();
                 for (DataSnapshot child : children) {
                     tour = child.getValue(Tour.class);
@@ -95,6 +124,7 @@ public class SearchFragment extends Fragment {
                     }
                     tours.add(new TourData(tour, isFavorite));
                 }
+                filterToursList.addAll(tours);
                 tourAdapter.notifyDataSetChanged();
             }
 

@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".activities.RegisterActivity">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/orange_light">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
+        <Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="25sp"
-            android:fontFamily="@font/fontforget"
-            android:textColorHint="@color/SaddleBrown"
-            android:textStyle="bold"
-            android:text="@string/create_a_new_account"/>
-
+            android:navigationIcon="@drawable/baseline_arrow_back_24"
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/profile"
@@ -62,7 +55,9 @@
             android:hint="@string/enter_name"
             android:focusable="true"
             android:layout_marginHorizontal="32dp"
-            android:textColorHint="@color/SaddleBrown"
+            android:textColorHint="@color/red"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -70,7 +65,7 @@
                 android:id="@+id/etFullname"
                 android:focusable="true"
                 android:drawableRight="@drawable/name_icon"
-                android:textColor="@color/SaddleBrown"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,8 +76,9 @@
             android:hint="@string/enter_phone"
             android:focusable="true"
             android:layout_marginHorizontal="32dp"
-            android:textColorHint="@color/SaddleBrown"
-            android:theme="@style/TextInputLayoutStyle"
+            android:textColorHint="@color/red"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -91,7 +87,7 @@
                 android:focusable="true"
                 android:inputType="phone"
                 android:drawableRight="@drawable/phone_icon"
-                android:textColor="@color/SaddleBrown"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,7 +98,9 @@
             android:hint="@string/enter_email"
             android:focusable="true"
             android:layout_marginHorizontal="32dp"
-            android:textColorHint="@color/SaddleBrown"
+            android:textColorHint="@color/red"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -111,7 +109,7 @@
                 android:focusable="true"
                 android:inputType="textEmailAddress"
                 android:drawableRight="@drawable/email_icon"
-                android:textColor="@color/SaddleBrown"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,7 +120,9 @@
             android:hint="@string/enter_password"
             android:focusable="true"
             android:layout_marginHorizontal="32dp"
-            android:textColorHint="@color/SaddleBrown"
+            android:textColorHint="@color/red"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -131,7 +131,7 @@
                 android:focusable="true"
                 android:inputType="textPassword"
                 android:drawableRight="@drawable/eye_password"
-                android:textColor="@color/SaddleBrown"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
         <RadioGroup

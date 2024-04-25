@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.lovelytours.AlertDialogManager;
 import com.example.lovelytours.DataBaseManager;
@@ -114,6 +115,9 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tour);
         tour = (Tour) getIntent().getSerializableExtra("tour");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(tour == null ? R.string.create_tour : R.string.register_to_tour);
+        toolbar.setNavigationOnClickListener(v -> finish());
         name = findViewById(R.id.name);
         description = findViewById(R.id.description);
         startPoint = findViewById(R.id.start_point);

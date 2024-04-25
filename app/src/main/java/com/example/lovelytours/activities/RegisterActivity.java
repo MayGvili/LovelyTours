@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -26,6 +27,7 @@ import com.example.lovelytours.DataBaseManager;
 import com.example.lovelytours.R;
 import com.example.lovelytours.Session;
 import com.example.lovelytours.models.Guide;
+import com.example.lovelytours.models.Tour;
 import com.example.lovelytours.models.Tourist;
 import com.example.lovelytours.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     StorageReference myStorage;
     TextInputEditText etFullname , etPhonenumber, regEmail, regPassword;
     Button btnRegister;
-    TextView title;
+    Toolbar toolbar;
     AppCompatImageView cameraImg, galleryImg, profileImg;
     Bitmap imageBt;
     String imageUri;
@@ -88,6 +90,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        toolbar =findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setTitle(R.string.create_a_new_account);
         progressBar = new ProgressDialog(this);
         progressBar.setMessage(getString(R.string.please_wait));
         myAuth=FirebaseAuth.getInstance();
@@ -102,7 +107,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         cameraImg = findViewById(R.id.take_photo);
         galleryImg = findViewById(R.id.gallery);
         groupType = findViewById(R.id.group);
-        title = findViewById(R.id.title);
 
         cameraImg.setOnClickListener(this);
 
@@ -115,7 +119,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (Session.getSession().getCurrentUser() != null) {// update mode
             initScreenUpdateMode();
         }
@@ -134,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 .centerCrop()
                 .fit()
                 .into(profileImg);
-        title.setText(R.string.update_your_account);
+        toolbar.setTitle(R.string.update_your_account);
     }
 
     private void openGallery() {
