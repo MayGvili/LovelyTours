@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="#F0FFFF"
+    android:padding="32dp"
+    android:background="@color/orange_light"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
@@ -33,31 +34,53 @@
         android:textStyle="bold" />
 
 
-    <EditText
-        android:layout_width="200dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/SaddleBrown"
-        android:hint="@string/enter_email"
-        android:textColorHint="@color/Gray"
-        android:drawableRight="@drawable/email_icon"
-        android:inputType="text"
-        android:id="@+id/etEmail"/>
+        android:layout_marginTop="16dp"
+        app:boxStrokeColor="@color/red"
+        app:hintTextColor="@color/red"
+        android:textColorHint="@color/red"
+        android:hint="@string/enter_email">
 
-    <EditText
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:textColor="@color/Gray"
-        android:textColorHint="@color/Gray"
-        android:layout_gravity="center"
-        android:hint="enter your Password"
-        android:inputType="textPassword"
-        android:drawableRight="@drawable/eye_password"
-        android:id="@+id/etPassword"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:textColor="@color/red"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
+            android:textColorHint="@color/red"
+            android:hint="@string/enter_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:textColor="@color/red"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/eye_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/baseline_remove_red_eye_24"/>
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,18 +90,18 @@
         android:textColor="@color/Gray"
         android:id="@+id/tvForgetPass"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"/>
+        android:layout_marginTop="20dp"
+        />
 
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center"
-        android:textColor="@color/AliceBlue"
-        android:backgroundTint="@color/Gray"
         android:id="@+id/btnLogin"
-        android:text="Login"
+        android:text="@string/login"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/Orange"
         android:layout_marginTop="30dp"/>
     <TextView
         android:layout_width="wrap_content"
@@ -86,8 +109,10 @@
         android:id="@+id/tvRegister"
         android:layout_marginTop="30dp"
         android:gravity="center"
+        android:textSize="16dp"
         android:textColor="@color/Gray"
-        android:text="To sign in press here"
+
+        android:text="@string/sign_up_text"
         android:textStyle="bold"
         android:layout_gravity="center"/>
 

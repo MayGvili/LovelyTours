@@ -1,6 +1,8 @@
 package com.example.lovelytours.fragments;
 
 import android.os.Bundle;
+import android.widget.Toolbar;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,5 +17,7 @@ public class FavoritesActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new ToursFragment(true))
                 .commit();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 }

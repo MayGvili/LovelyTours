@@ -48,5 +48,8 @@
     <string name="enter_phone">Enter Phone</string>
     <string name="enter_name">Enter name</string>
     <string name="enter_password">Enter password</string>
+    <string name="sign_up_text">Don\'t have an account? Please click here</string>
+    <string name="login">Login</string>
+    <string name="search_by_description">Serach By Description</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.lovelytours.AlertDialogManager;
 import com.example.lovelytours.DataBaseManager;
@@ -67,6 +69,7 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
     private long dateTimestamp;
     private Tour tour;
     private int tickets = 0;
+    private ProgressDialog progressBar;
 
 
     private final ActivityResultLauncher<Intent> takePhotoLauncher = registerForActivityResult(
@@ -113,7 +116,11 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tour);
+        progressBar = new ProgressDialog(this);
         tour = (Tour) getIntent().getSerializableExtra("tour");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(tour == null ? R.string.create_tour : R.string.register_to_tour);
+        toolbar.setNavigationOnClickListener(v -> finish());
         name = findViewById(R.id.name);
         description = findViewById(R.id.description);
         startPoint = findViewById(R.id.start_point);
@@ -255,10 +262,12 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
     }
 
     private void onRegisterToTourClicked() {
+        progressBar.show();
         tour.setLimPeople(tour.getLimPeople() - 1);
         DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                progressBar.dismiss();
                 Toast.makeText(CreateOrRegisterTourActivity.this, getText(R.string.registration_successfully), Toast.LENGTH_LONG).show();
                 setResult(Activity.RESULT_OK);
                 finish();
@@ -332,6 +341,7 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
     }
 
     private void createTour() {
+        progressBar.show();
         String id = UUID.randomUUID().toString();
         StorageReference imageRef = FirebaseStorage.getInstance().getReference().child("tours/" + id +".jpg");
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -347,6 +357,7 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
                         saveTourTODataBase(id);
                     });
                 } else {
+                    progressBar.dismiss();
                     AlertDialogManager.showMessage(CreateOrRegisterTourActivity.this, getString(R.string.error), task.getException().getMessage());
                 }
             }
@@ -363,6 +374,7 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
         DataBaseManager.saveTour(tour, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
+                progressBar.dismiss();
                 FirebaseMessagingManager.subscribeToPushIfNeeded(id);
                 Toast.makeText(CreateOrRegisterTourActivity.this, getText(R.string.tour_created), Toast.LENGTH_SHORT).show();
                 finish();

@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:background="@color/orange_light"
     tools:context=".activities.CreateOrRegisterTourActivity">
-
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:navigationIcon="@drawable/baseline_arrow_back_24"
+            android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="350dp"
@@ -42,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+
                 android:src="@drawable/baseline_insert_photo_24"/>
         </LinearLayout>
 
@@ -49,11 +60,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,12 +75,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:hint="@string/start_point">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/start_point"
                 android:focusable="false"
                 android:clickable="true"
+                android:textColor="@color/red"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -75,11 +92,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:hint="@string/destination">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/destination"
                 android:layout_width="match_parent"
+                android:textColor="@color/red"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,10 +107,14 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:hint="@string/description">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/description"
+                android:gravity="top"
+                android:textColor="@color/red"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,6 +123,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -106,6 +132,7 @@
                 android:layout_width="match_parent"
                 android:inputType="numberSigned"
                 android:hint="@string/max_people"
+                android:textColor="@color/red"
                 android:layout_height="match_parent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:focusable="false"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red"
             android:hint="@string/date">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -121,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:inputType="numberSigned"
                 android:focusable="false"
+                android:textColor="@color/red"
                 android:layout_height="match_parent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,6 +171,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:focusable="false"
+                    app:boxStrokeColor="@color/red"
+                    app:hintTextColor="@color/red"
                     android:hint="@string/start_time">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -148,6 +180,7 @@
                         android:layout_width="match_parent"
                         android:inputType="numberSigned"
                         android:focusable="false"
+                        android:textColor="@color/red"
                         android:layout_height="match_parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -164,6 +197,8 @@
                     android:layout_marginTop="16dp"
                     android:focusable="false"
                     android:layout_marginStart="8dp"
+                    app:boxStrokeColor="@color/red"
+                    app:hintTextColor="@color/red"
                     android:hint="@string/end_time">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -171,6 +206,7 @@
                         android:layout_width="match_parent"
                         android:inputType="numberSigned"
                         android:focusable="false"
+                        android:textColor="@color/red"
                         android:layout_height="match_parent"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -181,6 +217,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/create"
+            android:backgroundTint="@color/red"
+            android:textColor="@color/Orange"
             android:layout_marginTop="16dp"
             android:layout_gravity="center_horizontal"
             android:text="@string/create_tour"/>
@@ -203,6 +241,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/limit"
+                android:backgroundTint="@color/red"
+                android:textColor="@color/Orange"
                 android:text="@string/click_to_order"
                 android:layout_gravity="center_horizontal" />
 
@@ -214,5 +254,7 @@
         </LinearLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

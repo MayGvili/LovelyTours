@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/orange_light"
     tools:context=".activities.RegisterActivity">
 
     <LinearLayout
@@ -53,7 +54,9 @@
         android:hint="@string/your_name"
         android:focusable="true"
         android:layout_marginHorizontal="32dp"
-        android:textColorHint="@color/SaddleBrown"
+        android:textColorHint="@color/red"
+        app:boxStrokeColor="@color/red"
+        app:hintTextColor="@color/red"
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -72,16 +75,17 @@
         android:hint="@string/your_phone"
         android:focusable="true"
         android:layout_marginHorizontal="32dp"
-        android:textColorHint="@color/SaddleBrown"
-        android:layout_height="wrap_content">
+        android:textColorHint="@color/red"
+        app:boxStrokeColor="@color/red"
+        app:hintTextColor="@color/red"          android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:id="@+id/etPhonenumber"
             android:focusable="true"
             android:inputType="phone"
+            android:textColor="@color/red"
             android:drawableRight="@drawable/phone_icon"
-            android:textColor="@color/SaddleBrown"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,8 +96,9 @@
         android:hint="@string/your_email"
         android:focusable="true"
         android:layout_marginHorizontal="32dp"
-        android:textColorHint="@color/SaddleBrown"
-        android:layout_height="wrap_content">
+        android:textColorHint="@color/red"
+        app:boxStrokeColor="@color/red"
+        app:hintTextColor="@color/red"        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -101,7 +106,7 @@
             android:focusable="true"
             android:inputType="phone"
             android:drawableRight="@drawable/email_icon"
-            android:textColor="@color/SaddleBrown"
+            android:textColor="@color/red"
             android:layout_height="wrap_content"/>
     </com.google.android.material.textfield.TextInputLayout>
 

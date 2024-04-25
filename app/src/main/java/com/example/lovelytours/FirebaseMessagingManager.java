@@ -1,5 +1,6 @@
 package com.example.lovelytours;
 
+import android.app.Activity;
 import android.text.Html;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,7 @@ public class FirebaseMessagingManager {
         });
     }
 
-    public static void sendNotificationToGuide(AppCompatActivity activity , int tickets, User tourist, Tour tour) {
+    public static void sendNotificationToGuide(Activity activity , int tickets, User tourist, Tour tour) {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         JSONObject mainObject = new JSONObject();
         try {
@@ -66,8 +67,8 @@ public class FirebaseMessagingManager {
         }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                int x = 0;
-            }
+                    int y = 0;
+                }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
