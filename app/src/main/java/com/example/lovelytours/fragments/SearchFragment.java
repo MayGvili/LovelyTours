@@ -139,12 +139,9 @@ public class SearchFragment extends Fragment {
     }
 
     private void openTourDetails(int position) {
-        FirebaseMessagingManager.subscribeToPushIfNeeded(tours.get(position).getTour().getId());
-        FirebaseMessagingManager.sendNotificationToGuide(getActivity(), 5, Session.getSession().getCurrentUser(), tours.get(position).getTour());
-
-//        Intent intent = new Intent(this.getContext(), CreateOrRegisterTourActivity.class);
-//        intent.putExtra("tour", tours.get(position).getTour());
-//        startActivity(intent);
+        Intent intent = new Intent(this.getContext(), CreateOrRegisterTourActivity.class);
+        intent.putExtra("tour", tours.get(position).getTour());
+        startActivity(intent);
     }
 
 }
