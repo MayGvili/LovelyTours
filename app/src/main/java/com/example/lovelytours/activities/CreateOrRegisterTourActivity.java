@@ -117,6 +117,7 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tour);
         progressBar = new ProgressDialog(this);
+        progressBar.setMessage(getString(R.string.please_wait));
         tour = (Tour) getIntent().getSerializableExtra("tour");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(tour == null ? R.string.create_tour : R.string.register_to_tour);
