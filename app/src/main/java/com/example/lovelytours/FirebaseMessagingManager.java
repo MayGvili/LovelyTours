@@ -36,14 +36,15 @@ public class FirebaseMessagingManager {
     }
 
     public static void subscribeToPushIfNeeded() {
-        FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (Session.getSession().isGuide()) {
+        if (Session.getSession().isGuide()){
+            FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
                     FirebaseMessaging.getInstance().subscribeToTopic(Session.getSession().getCurrentUser().getId());
                 }
-            }
-        });
+            });
+        }
+
     }
 
     public static void sendNotificationToGuide(Activity activity , int tickets, User tourist, Tour tour) {
