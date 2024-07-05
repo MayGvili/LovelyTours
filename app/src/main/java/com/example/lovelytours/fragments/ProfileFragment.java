@@ -56,6 +56,7 @@ public class ProfileFragment extends Fragment {
         signOut.setOnClickListener(v -> signOut());
         favoriteBT = view.findViewById(R.id.favorite);
         favoriteBT.setOnClickListener(v -> openFavoriteScreen());
+        favoriteBT.setVisibility(Session.getSession().isGuide() ? View.GONE : View.VISIBLE);
         return view;
     }
 

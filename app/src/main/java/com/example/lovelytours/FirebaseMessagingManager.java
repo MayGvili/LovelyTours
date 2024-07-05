@@ -35,11 +35,13 @@ public class FirebaseMessagingManager {
         FirebaseMessaging.getInstance().deleteToken();
     }
 
-    public static void subscribeToPushIfNeeded(String topic) {
+    public static void subscribeToPushIfNeeded() {
         FirebaseMessaging.getInstance().deleteToken().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                FirebaseMessaging.getInstance().subscribeToTopic(topic);
+                if (Session.getSession().isGuide()) {
+                    FirebaseMessaging.getInstance().subscribeToTopic(Session.getSession().getCurrentUser().getId());
+                }
             }
         });
     }
@@ -48,7 +50,7 @@ public class FirebaseMessagingManager {
         RequestQueue requestQueue = Volley.newRequestQueue(activity);
         JSONObject mainObject = new JSONObject();
         try {
-            mainObject.put("to", "/topics/" + tour.getId());
+            mainObject.put("to", "/topics/" + tour.getCreatedUserId());
             JSONObject object = new JSONObject();
             object.put("title", Html.fromHtml(activity.getString(R.string.you_have_a_new_tour_registration,
                     tourist.getFullName(), tickets, tour.getName())));

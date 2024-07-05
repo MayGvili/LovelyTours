@@ -14,12 +14,14 @@ public class Tour implements Serializable
     private String startTime;
     private String endTime;
 
+    private String createdUserId;
+
     private Location startLocation;
     private Location destination;
     private ArrayList<String> participatedIds = new ArrayList<>();
 
 
-    public Tour(String id, int limPeople, long date, String description, String image, String name, String startTime, String endTime, Location startLocation, Location destination) {
+    public Tour(String id, String createdUserId, int limPeople, long date, String description, String image, String name, String startTime, String endTime, Location startLocation, Location destination) {
         this.id = id;
         this.limPeople = limPeople;
         this.date = date;
@@ -30,6 +32,15 @@ public class Tour implements Serializable
         this.endTime = endTime;
         this.startLocation = startLocation;
         this.destination = destination;
+        this.createdUserId = createdUserId;
+    }
+
+    public String getCreatedUserId() {
+        return createdUserId;
+    }
+
+    public void setCreatedUserId(String createdUserId) {
+        this.createdUserId = createdUserId;
     }
 
     public Tour(){}

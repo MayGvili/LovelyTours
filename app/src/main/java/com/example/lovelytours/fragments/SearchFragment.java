@@ -66,7 +66,7 @@ public class SearchFragment extends Fragment {
                 filterToursList.addAll(tours.stream().filter(new Predicate<TourData>() {
                     @Override
                     public boolean test(TourData tourData) {
-                        return charSequence.toString().contains(tourData.getTour().getDescription()) || charSequence.toString().isEmpty();
+                        return tourData.getTour().getDescription().contains(charSequence) || charSequence.toString().isEmpty();
                     }
                 }).collect(Collectors.toList()));
                 tourAdapter.notifyDataSetChanged();

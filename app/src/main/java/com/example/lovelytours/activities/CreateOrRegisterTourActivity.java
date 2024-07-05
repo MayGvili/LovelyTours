@@ -367,7 +367,7 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
     }
 
     private void saveTourTODataBase(String id) {
-        Tour tour = new Tour(id, Integer.parseInt(maxTourists.getText().toString()), dateTimestamp, description.getText().toString(),
+        Tour tour = new Tour(id, Session.getSession().getCurrentUser().getId(), Integer.parseInt(maxTourists.getText().toString()), dateTimestamp, description.getText().toString(),
                 imageUrl ,name.getText().toString() , startTime.getText().toString(),
                 endTime.getText().toString(), new Location(stratAddress.getLatitude(), stratAddress.getLongitude(),startPoint.getText().toString()),
                 new Location(endAddress.getLatitude(), endAddress.getLongitude(), destination.getText().toString()));
@@ -376,7 +376,6 @@ public class CreateOrRegisterTourActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
                 progressBar.dismiss();
-                FirebaseMessagingManager.subscribeToPushIfNeeded(id);
                 Toast.makeText(CreateOrRegisterTourActivity.this, getText(R.string.tour_created), Toast.LENGTH_SHORT).show();
                 finish();
             }

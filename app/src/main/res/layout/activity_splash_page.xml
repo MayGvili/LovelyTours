@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main_layout"
     tools:context=".activities.SplashPageActivity"
-    android:background="@color/AliceBlue">
+    android:background="#FAA45A">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/browen" />
+        app:lottie_rawRes="@raw/update" />
 
 
 </RelativeLayout>

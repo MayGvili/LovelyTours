@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="25sp"
-            android:fontFamily="@font/fontforget"
+            android:fontFamily="@font/font_lovelytours"
             android:textColorHint="@color/SaddleBrown"
             android:textStyle="bold"
             android:text="@string/my_profile"/>
@@ -27,7 +27,7 @@
         <ImageView
             android:id="@+id/edit"
             android:layout_gravity="end"
-            android:src="@drawable/baseline_edit_24"
+            android:src="@drawable/_mode_edit_"
             android:layout_marginStart="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -63,6 +63,7 @@
             android:layout_width="match_parent"
             android:id="@+id/etFullname"
             android:focusable="true"
+            android:enabled="false"
             android:drawableRight="@drawable/name_icon"
             android:textColor="@color/SaddleBrown"
             android:layout_height="wrap_content"/>
@@ -83,6 +84,7 @@
             android:layout_width="match_parent"
             android:id="@+id/etPhonenumber"
             android:focusable="true"
+            android:enabled="false"
             android:inputType="phone"
             android:textColor="@color/red"
             android:drawableRight="@drawable/phone_icon"
@@ -104,6 +106,7 @@
             android:layout_width="match_parent"
             android:id="@+id/regEmail"
             android:focusable="true"
+            android:enabled="false"
             android:inputType="phone"
             android:drawableRight="@drawable/email_icon"
             android:textColor="@color/red"

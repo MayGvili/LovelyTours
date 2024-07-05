@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lovelytours.AlertDialogManager;
 import com.example.lovelytours.DataBaseManager;
+import com.example.lovelytours.FirebaseMessagingManager;
 import com.example.lovelytours.R;
 import com.example.lovelytours.Session;
 import com.example.lovelytours.models.Guide;
@@ -151,10 +152,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 User user;
                 if (isGuide) {
                     user = dataSnapshot.getValue(Guide.class);
+
                 } else {
                     user = dataSnapshot.getValue(Tourist.class);
                 }
                 Session.getSession().setCurrentUser(user);
+                FirebaseMessagingManager.subscribeToPushIfNeeded();
                 Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
                 startActivity(intent);
                 finish();
