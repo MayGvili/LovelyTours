@@ -100,6 +100,8 @@
                 android:id="@+id/destination"
                 android:layout_width="match_parent"
                 android:textColor="@color/red"
+                android:focusable="false"
+                android:clickable="true"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
